@@ -1,6 +1,6 @@
 package nl.han.ica.datastructures;
 
-public interface IHANLinkedList<T> {
+public interface IHANLinkedList<T> extends Iterable<T> {
     /**
      * Adds value to the front of the list
      * @param value generic value to be added
@@ -18,6 +18,12 @@ public interface IHANLinkedList<T> {
      * @param value the value to add at index
      */
     void insert(int index, T value);
+
+    /**
+     * Adds value at the end of the list
+     * @param value the value to add at the end
+     */
+    void insert(T value);
 
     /**
      * Deletes value at position

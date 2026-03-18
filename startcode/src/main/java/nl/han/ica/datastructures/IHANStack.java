@@ -7,6 +7,10 @@ public interface IHANStack<T> {
      */
     void push(T value);
 
+    default void add(T value) {
+        push(value);
+    }
+
     /**
      * Pops (and removes) value at top of stack
      * @return popped value
