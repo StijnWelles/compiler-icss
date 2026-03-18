@@ -7,6 +7,18 @@ import java.util.Iterator;
 public class HANLinkedList<T> implements IHANLinkedList<T> {
   private LinkedListNode<T> firstNode;
 
+  public HANLinkedList() {}
+
+  public HANLinkedList(T initialValue) {
+    insert(initialValue);
+  }
+
+  public HANLinkedList(T... initialValues) {
+    for (T value : initialValues) {
+      insert(value);
+    }
+  }
+
   @Override
   public void addFirst(T value) {
     firstNode = new LinkedListNode<>(firstNode, value);
@@ -54,7 +66,6 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
 
   @Override
   public void insert(T value) {
-    System.out.println(getSize());
     insert(getSize(), value);
   }
 
