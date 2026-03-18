@@ -48,13 +48,13 @@ stylesheet: statement* EOF;
 statement: stylerule | variable;
 stylerule: selector OPEN_BRACE property* CLOSE_BRACE; // todo multiple selectors with comma seperators
 variableName: CAPITAL_IDENT;
-variable: variableName ASSIGNMENT_OPERATOR additiveExpression SEMICOLON;
+variable: variableName ASSIGNMENT_OPERATOR expression SEMICOLON;
 
 
 // Properties in rule
 property: declaration | if_clause;
 property_name: LOWER_IDENT;
-declaration: property_name COLON additiveExpression SEMICOLON;
+declaration: property_name COLON expression SEMICOLON;
 literal: COLOR #colorLiteral
        | PIXELSIZE #pixelLiteral
        | PERCENTAGE #percentageLiteral
@@ -78,10 +78,7 @@ selector
     | ID_IDENT #idSelector;
 
 // Math
-multiplicativeExpression
-    : literal #litExpression
-    | multiplicativeExpression MUL literal #multExpression; // todo add devide
-additiveExpression
-    : multiplicativeExpression #ignore
-    | additiveExpression PLUS multiplicativeExpression #plusExpression
-    | additiveExpression MIN multiplicativeExpression #minExpression;
+expression: literal #litExpression
+          | expression MUL expression #multExpression // todo add devide
+          | expression PLUS expression #plusExpression
+          | expression MIN expression #minExpression;

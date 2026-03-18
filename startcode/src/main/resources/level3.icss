@@ -21,7 +21,7 @@ a {
 }
 
 #menu {
-	width: ParWidth + 20px;
+	width: ParWidth + 2 * 10px + 5px * 5;
 }
 
 .menu {
