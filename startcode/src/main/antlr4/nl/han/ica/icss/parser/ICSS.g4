@@ -80,7 +80,7 @@ selector
 // Math
 multiplicativeExpression
     : literal #litExpression
-    | multiplicativeExpression MUL literal #multExpression;
+    | multiplicativeExpression MUL literal #multExpression; // todo add devide
 additiveExpression
     : multiplicativeExpression #ignore
     | additiveExpression PLUS multiplicativeExpression #plusExpression

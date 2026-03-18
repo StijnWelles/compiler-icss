@@ -29,13 +29,22 @@ public class ASTListener extends ICSSBaseListener {
 		return ast;
 	}
 
-  @Override
-  public void enterStylesheet(ICSSParser.StylesheetContext ctx) {
+	private void addAsChildAndSetParent(ASTNode node) {
+		stack.peek().addChild(node);
+		stack.add(node);
+	}
+
+	private void addAsChild(ASTNode node) {
+		stack.peek().addChild(node);
+	}
+
+	@Override
+	public void enterStylesheet(ICSSParser.StylesheetContext ctx) {
 		Stylesheet stylesheet = new Stylesheet();
 
 		ast.setRoot(stylesheet);
 		stack.add(stylesheet);
-  }
+	}
 
 	@Override
 	public void exitStylesheet(ICSSParser.StylesheetContext ctx) {
@@ -44,10 +53,7 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterStylerule(ICSSParser.StyleruleContext ctx) {
-		Stylerule stylerule = new Stylerule();
-
-		stack.peek().addChild(stylerule);
-		stack.add(stylerule);
+		addAsChildAndSetParent(new Stylerule());
 	}
 
 	@Override
@@ -55,35 +61,28 @@ public class ASTListener extends ICSSBaseListener {
 		stack.pop();
 	}
 
-	private void enterSelector(Selector s) {
-		stack.peek().addChild(s);
-	}
-
 	@Override
 	public void enterTagSelector(ICSSParser.TagSelectorContext ctx) {
-		enterSelector(new TagSelector(ctx.getText()));
+		addAsChild(new TagSelector(ctx.getText()));
 	}
 
 	@Override
 	public void enterClassSelector(ICSSParser.ClassSelectorContext ctx) {
 		String selectorText = ctx.getText().substring(1); // Todo substring voelt hacky, op een andere manier???
 
-		enterSelector(new ClassSelector(selectorText));
+		addAsChild(new ClassSelector(selectorText));
 	}
 
 	@Override
 	public void enterIdSelector(ICSSParser.IdSelectorContext ctx) {
 		String selectorText = ctx.getText().substring(1); // Todo substring voelt hacky, op een andere manier???
 
-		enterSelector(new IdSelector(selectorText));
+		addAsChild(new IdSelector(selectorText));
 	}
 
 	@Override
 	public void enterDeclaration(ICSSParser.DeclarationContext ctx) {
-		Declaration d = new Declaration();
-
-		stack.peek().addChild(d);
-		stack.add(d);
+		addAsChildAndSetParent(new Declaration());
 	}
 
 	@Override
@@ -93,17 +92,12 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterProperty_name(ICSSParser.Property_nameContext ctx) {
-		stack.peek().addChild(new PropertyName(ctx.getText()));
-	}
-
-	private void addOperation(Operation operation) {
-		stack.peek().addChild(operation);
-		stack.add(operation);
+		addAsChild(new PropertyName(ctx.getText()));
 	}
 
 	@Override
 	public void enterPlusExpression(ICSSParser.PlusExpressionContext ctx) {
-		addOperation(new AddOperation());
+		addAsChildAndSetParent(new AddOperation());
 	}
 
 	@Override
@@ -113,7 +107,7 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterMinExpression(ICSSParser.MinExpressionContext ctx) {
-		addOperation(new SubtractOperation());
+		addAsChildAndSetParent(new SubtractOperation());
 	}
 
 	@Override
@@ -123,7 +117,7 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterMultExpression(ICSSParser.MultExpressionContext ctx) {
-		addOperation(new MultiplyOperation());
+		addAsChildAndSetParent(new MultiplyOperation());
 	}
 
 	@Override
@@ -134,46 +128,43 @@ public class ASTListener extends ICSSBaseListener {
 	// Literals
 	@Override
 	public void enterColorLiteral(ICSSParser.ColorLiteralContext ctx) {
-		stack.peek().addChild(new ColorLiteral(ctx.getText()));
+		addAsChild(new ColorLiteral(ctx.getText()));
 	}
 
 	@Override
 	public void enterPixelLiteral(ICSSParser.PixelLiteralContext ctx) {
-		stack.peek().addChild(new PixelLiteral(ctx.getText()));
+		addAsChild(new PixelLiteral(ctx.getText()));
 	}
 
 	@Override
 	public void enterPercentageLiteral(ICSSParser.PercentageLiteralContext ctx) {
-		stack.peek().addChild(new PercentageLiteral(ctx.getText()));
+		addAsChild(new PercentageLiteral(ctx.getText()));
 	}
 
 	@Override
 	public void enterScalarLiteral(ICSSParser.ScalarLiteralContext ctx) {
-		stack.peek().addChild(new ScalarLiteral(ctx.getText()));
+		addAsChild(new ScalarLiteral(ctx.getText()));
 	}
 
 	@Override
 	public void enterTrueLiteral(ICSSParser.TrueLiteralContext ctx) {
-		stack.peek().addChild(new BoolLiteral(true));
+		addAsChild(new BoolLiteral(true));
 	}
 
 	@Override
 	public void enterFalseLiteral(ICSSParser.FalseLiteralContext ctx) {
-		stack.peek().addChild(new BoolLiteral(false));
+		addAsChild(new BoolLiteral(false));
 	}
 
 	@Override
 	public void enterVariableReferenceLiteral(ICSSParser.VariableReferenceLiteralContext ctx) {
-		stack.peek().addChild(new VariableReference(ctx.getText()));
+		addAsChild(new VariableReference(ctx.getText()));
 	}
 
 	// Variables
 	@Override
 	public void enterVariable(ICSSParser.VariableContext ctx) {
-		VariableAssignment variableAssignment = new VariableAssignment();
-
-		stack.peek().addChild(variableAssignment);
-		stack.add(variableAssignment);
+		addAsChildAndSetParent(new VariableAssignment());
 	}
 
 	@Override
@@ -183,16 +174,13 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterVariableName(ICSSParser.VariableNameContext ctx) {
-		stack.peek().addChild(new VariableReference(ctx.getText()));
+		addAsChild(new VariableReference(ctx.getText()));
 	}
 
 	// Conditions
 	@Override
 	public void enterIf_clause(ICSSParser.If_clauseContext ctx) {
-		IfClause ifClause = new IfClause();
-
-		stack.peek().addChild(ifClause);
-		stack.add(ifClause);
+		addAsChildAndSetParent(new IfClause());
 	}
 
 	@Override
@@ -202,10 +190,7 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterElse_clause(ICSSParser.Else_clauseContext ctx) {
-		ElseClause elseClause = new ElseClause();
-
-		stack.peek().addChild(elseClause);
-		stack.add(elseClause);
+		addAsChildAndSetParent(new ElseClause());
 	}
 
 	@Override
