@@ -18,7 +18,7 @@ SCALAR: [0-9]+;
 
 
 //Color value takes precedence over id idents
-COLOR: '#' [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f];
+COLOR: '#' [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f]; // Todo add support for #000, #bbb as short for #000000, #bbbbbb according to the CSS standard
 
 //Specific identifiers for id's and css classes
 ID_IDENT: '#' [a-z0-9\-]+;
@@ -42,8 +42,46 @@ MUL: '*';
 ASSIGNMENT_OPERATOR: ':=';
 
 
-
-
 //--- PARSER: ---
-stylesheet: EOF;
+stylesheet: statement* EOF;
 
+statement: stylerule | variable;
+stylerule: selector OPEN_BRACE property* CLOSE_BRACE; // todo multiple selectors with comma seperators
+variableName: CAPITAL_IDENT;
+variable: variableName ASSIGNMENT_OPERATOR additiveExpression SEMICOLON;
+
+
+// Properties in rule
+property: declaration | if_clause;
+property_name: LOWER_IDENT;
+declaration: property_name COLON additiveExpression SEMICOLON;
+literal: COLOR #colorLiteral
+       | PIXELSIZE #pixelLiteral
+       | PERCENTAGE #percentageLiteral
+       | SCALAR #scalarLiteral
+       | TRUE #trueLiteral
+       | FALSE #falseLiteral
+       | CAPITAL_IDENT #variableReferenceLiteral;
+
+
+// Conditions
+if_clause: IF BOX_BRACKET_OPEN literal BOX_BRACKET_CLOSE
+            OPEN_BRACE property* CLOSE_BRACE
+            else_clause?;
+else_clause: ELSE OPEN_BRACE property* CLOSE_BRACE;
+
+
+//
+selector
+    : LOWER_IDENT #tagSelector
+    | CLASS_IDENT #classSelector
+    | ID_IDENT #idSelector;
+
+// Math
+multiplicativeExpression
+    : literal #litExpression
+    | multiplicativeExpression MUL literal #multExpression;
+additiveExpression
+    : multiplicativeExpression #ignore
+    | additiveExpression PLUS multiplicativeExpression #plusExpression
+    | additiveExpression MIN multiplicativeExpression #minExpression;

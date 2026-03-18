@@ -1,0 +1,19 @@
+TestVar := #ffffff;
+
+p {
+	background-color: #ffffff;
+	width: 500px;
+}
+
+a {
+	color: #ff0000;
+}
+
+#menu {
+	width: 500px + 2 * 10px;
+}
+
+.menu {
+	color: #000000;
+	background-color: TestVar;
+}

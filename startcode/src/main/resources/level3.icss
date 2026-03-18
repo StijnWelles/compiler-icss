@@ -26,6 +26,5 @@ a {
 
 .menu {
 	color: #000000;
-    background-color: LinkColor;
-
+	background-color: LinkColor;
 }
