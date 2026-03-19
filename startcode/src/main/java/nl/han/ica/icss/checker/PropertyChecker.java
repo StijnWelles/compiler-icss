@@ -93,8 +93,8 @@ public class PropertyChecker extends CheckerBase {
   }
 
   private void checkSizeDeclaration(Declaration declaration) {
-    boolean retval = parseExpression(declaration.expression, declaration.property.name);
+    boolean value = parseExpression(declaration.expression, declaration.property.name);
 
-    System.out.println(retval);
+    System.out.println(value);
   }
 }
