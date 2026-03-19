@@ -14,7 +14,7 @@ TRUE: 'TRUE';
 FALSE: 'FALSE';
 PIXELSIZE: [0-9]+ 'px';
 PERCENTAGE: [0-9]+ '%';
-SCALAR: [0-9]+;
+SCALAR: [0-9]+; // todo kommagetallen?
 
 
 //Color value takes precedence over id idents

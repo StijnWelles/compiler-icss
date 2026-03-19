@@ -1,8 +1,6 @@
 package nl.han.ica.icss.ast.operations;
 
-import nl.han.ica.icss.ast.Operation;
-
-public class AddOperation extends Operation {
+public class AddOperation extends AdditiveOperation {
 
     @Override
     public String getNodeLabel() {

@@ -2,14 +2,11 @@ package nl.han.ica.icss.checker;
 
 import nl.han.ica.datastructures.IHANLinkedList;
 import nl.han.ica.datastructures.LinkedList.HANLinkedList;
-import nl.han.ica.datastructures.Pair;
-import nl.han.ica.icss.ast.Declaration;
-import nl.han.ica.icss.ast.Expression;
-import nl.han.ica.icss.ast.Operation;
-import nl.han.ica.icss.ast.VariableReference;
+import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.literals.ColorLiteral;
 import nl.han.ica.icss.ast.literals.ScalarLiteral;
-import nl.han.ica.icss.ast.operations.MultiplyOperation;
+import nl.han.ica.icss.ast.operations.AdditiveOperation;
+import nl.han.ica.icss.ast.operations.MultiplicativeOperation;
 import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.HashMap;
@@ -21,8 +18,12 @@ public class PropertyChecker extends CheckerBase {
     SIZE,
   }
 
+  private final IHANLinkedList<ExpressionType> allowedSizeTypes = new HANLinkedList<>(
+          ExpressionType.PIXEL,
+          ExpressionType.PERCENTAGE);
+
   // Todo eigen hashmap implementatie?
-  private Map<String, ExpressionGroup> validProperties = new HashMap<>(Map.of(
+  private final Map<String, ExpressionGroup> validProperties = new HashMap<>(Map.of(
           "color", ExpressionGroup.COLOR,
           "background-color", ExpressionGroup.COLOR,
           "width", ExpressionGroup.SIZE,
@@ -51,8 +52,12 @@ public class PropertyChecker extends CheckerBase {
     if (declaration.expression instanceof VariableReference variableReference) {
       ExpressionType variableType = getVariableTypeFromName(variableReference.name);
 
+      if (variableType == null) {
+        return;
+      }
+
       if (variableType != ExpressionType.COLOR) {
-        declaration.setError("Variable %s (type %s) kan niet worden gebruikt voor property %s (type %s)."
+        declaration.setError("Variable %s (type %s) cannot be used for property %s (type %s)."
                 .formatted(variableReference.name, variableType, declaration.property.name, ExpressionType.COLOR));
       }
 
@@ -65,36 +70,68 @@ public class PropertyChecker extends CheckerBase {
     }
   }
 
-  private boolean doExpressionsHaveMatchingTypes(Expression lhs, Expression rhs) {
-    if (lhs instanceof ScalarLiteral || rhs instanceof ScalarLiteral) {
-      return true;
+  private ExpressionType getAndValidateOperationType(Operation o) {
+    ExpressionType lhsType = getType(o.lhs);
+    ExpressionType rhsType = getType(o.rhs);
+
+    // If both values are not scalar and not the same type, it's a type mismatch (ex 4px+3%)
+    if (lhsType != rhsType && lhsType != ExpressionType.SCALAR && rhsType != ExpressionType.SCALAR) {
+      o.setError("Cannot mix different non-scalar types %s and %s in an operation.".formatted(lhsType, rhsType));
     }
 
-    return lhs.getClass() == rhs.getClass();
+    if (o instanceof MultiplicativeOperation) {
+      // For multiplication, at least one of the leaves have to be scalar
+      if (lhsType != ExpressionType.SCALAR && rhsType != ExpressionType.SCALAR) {
+        o.setError("Using 2 non-scalar literals is not allowed in a multiplicative operation."); // todo betere foutmelding
+        return lhsType;
+      }
+
+      // One or two of the types are scalar
+      if (lhsType == ExpressionType.SCALAR) {
+        return rhsType;
+      }
+      return lhsType;
+    }
+
+    if (o instanceof AdditiveOperation) {
+      if (lhsType == ExpressionType.SCALAR || rhsType == ExpressionType.SCALAR) {
+        o.setError("Using a scalar value in an additive operation is not allowed.");
+        return lhsType;
+      }
+
+      // Types must match and are not scalar
+      return lhsType;
+    }
+
+    return ExpressionType.UNDEFINED;
+  }
+
+  private ExpressionType getType(Expression e) {
+    if (e instanceof Literal l) {
+      return l.getExpressionType();
+    }
+
+    if (e instanceof VariableReference v) {
+      return getVariableTypeFromName(v.name);
+    }
+
+    if (e instanceof Operation o) {
+      return getAndValidateOperationType(o);
+    }
+
+    return ExpressionType.UNDEFINED;
   }
 
   // todo resolving variables
-  private boolean parseExpression(Expression exp, String declarationName) {
-    if (exp instanceof Operation operation) {
-      // Multiply requirement: At least one of the leaves must be scalar
-      if (operation instanceof MultiplyOperation multiplyOperation) {
-        if (!(multiplyOperation.lhs instanceof ScalarLiteral)
-         && !(multiplyOperation.rhs instanceof ScalarLiteral)) {
-          multiplyOperation.setError("%s: At least one of the values in the calculation must be scalar".formatted(declarationName));
-          return false;
-        }
-      }
+  private void validateExpression(Expression exp, String propertyName) {
+    ExpressionType resultType = getType(exp);
 
-
-      return parseExpression(operation.lhs, declarationName) && parseExpression(operation.rhs, declarationName);
+    if (!allowedSizeTypes.has(resultType)) {
+      exp.setError("Type %s not allowed in property %s.".formatted(resultType, propertyName));
     }
-
-
   }
 
   private void checkSizeDeclaration(Declaration declaration) {
-    boolean value = parseExpression(declaration.expression, declaration.property.name);
-
-    System.out.println(value);
+    validateExpression(declaration.expression, declaration.property.name);
   }
 }

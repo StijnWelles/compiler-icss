@@ -39,6 +39,13 @@ public interface IHANLinkedList<T> extends Iterable<T> {
     T get(int pos);
 
     /**
+     * Checks if the list has a value
+     * @param value
+     * @return true if `value` is in list, false if not.
+     */
+    boolean has(T value);
+
+    /**
      * Removes first element
      */
     void removeFirst();

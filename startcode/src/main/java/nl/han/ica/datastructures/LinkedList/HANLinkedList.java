@@ -93,6 +93,18 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
   }
 
   @Override
+  public boolean has(T value) {
+    // Use the Iterable interface
+    for (T t : this) {
+      if (t == value) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @Override
   public void removeFirst() {
     firstNode = firstNode.getNext();
   }
