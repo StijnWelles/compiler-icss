@@ -1,13 +1,11 @@
 package nl.han.ica.icss.checker;
 
-import nl.han.ica.datastructures.IHANLinkedList;
 import nl.han.ica.datastructures.LinkedList.HANLinkedList;
 import nl.han.ica.icss.ast.*;
+import nl.han.ica.icss.ast.types.EnterScope;
 import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.HashMap;
-
-
 
 public class Checker extends CheckerBase {
   private PropertyChecker propertyChecker;
@@ -22,67 +20,73 @@ public class Checker extends CheckerBase {
   }
 
   private void walkThroughAST(ASTNode curNode) {
+    if (curNode instanceof EnterScope) {
+      enterScope();
+    }
+
     checkNode(curNode);
 
+    boolean hasExitedScope = false;
     for (ASTNode childNode : curNode.getChildren()) {
       if (curNode instanceof VariableAssignment && childNode instanceof VariableReference) {
         // Don't do checks for variable names in the assignment
         continue;
       }
 
+      if (childNode instanceof ElseClause) {
+        exitScope();
+        hasExitedScope = true;
+      }
+
       walkThroughAST(childNode);
     }
-  }
 
-  // Helpers
-  private boolean addErrorIfVariableNotDefined(ASTNode node, String variableName) {
-    if (getVariableTypeFromName(variableName) == null) {
-      addVariableNotDefinedError(node, variableName);
+    if (curNode instanceof EnterScope && !hasExitedScope) {
+      exitScope();
     }
-    return getVariableTypeFromName(variableName) != null;
-  }
-
-  private boolean addErrorIfVariableTypeMismatch(ASTNode node, String variableName, ExpressionType targetType) {
-    ExpressionType actualType = getVariableTypeFromName(variableName);
-
-    if (actualType == null) {
-      addVariableNotDefinedError(node, variableName);
-      return false;
-    }
-
-    if (actualType != targetType) {
-      addVariableTypeMismatchError(node, variableName, actualType, targetType);
-    }
-
-    return actualType == targetType;
   }
 
   private void checkNode(ASTNode node) {
-    if (node instanceof VariableAssignment variableAssignment) {
-      handle(variableAssignment);
-    } else if (node instanceof VariableReference variableReference) {
-      handle(variableReference);
-    } else if (node instanceof Declaration declaration) {
-      propertyChecker.check(declaration);
-    } else if (node instanceof IfClause ifClause) {
-      handle(ifClause);
+    switch (node) {
+      case VariableAssignment variableAssignment -> handle(variableAssignment);
+      case VariableReference variableReference -> handle(variableReference);
+      case Declaration declaration -> propertyChecker.check(declaration);
+      case IfClause ifClause -> handle(ifClause);
+      default -> {}
+    }
+  }
+
+  private void enterScope() {
+    variableTypes.insert(new HashMap<>());
+  }
+
+  private void exitScope() {
+    variableTypes.delete(variableTypes.getSize()-1);
+  }
+
+  // Helpers
+  private void addErrorIfVariableNotDefined(ASTNode node, String variableName) {
+    if (getVariableTypeFromName(variableName) == null) {
+      addVariableNotDefinedError(node, variableName);
     }
   }
 
   private void handle(VariableAssignment variableAssignment) {
-    if (variableAssignment.expression instanceof Literal literal) {
-      variableTypes.get(0).put(variableAssignment.name.name, literal.getExpressionType());
-    } else if (variableAssignment.expression instanceof VariableReference variableReference) {
-      ExpressionType result = getVariableTypeFromName(variableReference.name);
+    ExpressionType type = getType(variableAssignment.expression);
 
-      if (result == null) {
-        addVariableNotDefinedError(variableAssignment, variableReference.name);
-      }
+    getCurrentScope().put(variableAssignment.name.name, type);
 
-      variableTypes.get(0).put(variableAssignment.name.name, result);
-    }
-    // Todo calculations in assignment
-//      variableTypes.get(0).put(variableAssignment.name, )
+//    if (variableAssignment.expression instanceof Literal literal) {
+//      variableTypes.get(0).put(variableAssignment.name.name, literal.getExpressionType());
+//    } else if (variableAssignment.expression instanceof VariableReference variableReference) {
+//      ExpressionType result = getVariableTypeFromName(variableReference.name);
+//
+//      if (result == null) {
+//        addVariableNotDefinedError(variableAssignment, variableReference.name);
+//      }
+//
+//      variableTypes.get(0).put(variableAssignment.name.name, result);
+//    }
   }
 
   private void handle(VariableReference variableReference) {

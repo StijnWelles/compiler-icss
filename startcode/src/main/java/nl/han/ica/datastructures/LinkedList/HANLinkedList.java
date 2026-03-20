@@ -135,4 +135,19 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
   public Iterator<T> iterator() {
     return new HANLinkedListIterator<>(firstNode);
   }
+
+  @Override
+  public String toString(String sep) {
+    StringBuilder v = new StringBuilder();
+
+    for (int i = 0; i < getSize() - 1; i++) {
+      T t = get(i);
+
+      v.append(t).append(sep);
+    }
+
+    v.append(get(getSize()-1));
+
+    return v.toString();
+  }
 }

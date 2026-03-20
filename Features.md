@@ -13,6 +13,7 @@
 - [ ] RGB kleuren parsen, evt transformeren naar hex
 - [ ] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b)
 - [ ] Scalar: Kommagetallen
+- [ ] Comments in css
 
 # Checking
 - [x] CH01 - Error bij gebruik van niet-gedefinieerde variabelen

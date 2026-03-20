@@ -61,4 +61,11 @@ public interface IHANLinkedList<T> extends Iterable<T> {
      * @return number of items in list
      */
     int getSize();
+
+    /**
+     * Makes the list into a displayable string, seperated by `sep`
+     * @param sep the seperator
+     * @return String with the values, seperated by `sep`
+     */
+    String toString(String sep);
 }

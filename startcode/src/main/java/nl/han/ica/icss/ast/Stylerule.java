@@ -1,9 +1,11 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.types.EnterScope;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Stylerule extends ASTNode {
+public class Stylerule extends ASTNode implements EnterScope {
 	
 	public ArrayList<Selector> selectors = new ArrayList<>();
 	public ArrayList<ASTNode> body = new ArrayList<>();

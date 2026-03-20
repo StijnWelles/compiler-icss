@@ -70,14 +70,14 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterClassSelector(ICSSParser.ClassSelectorContext ctx) {
-		String selectorText = ctx.getText().substring(1); // Todo substring voelt hacky, op een andere manier???
+		String selectorText = ctx.getText().substring(1);
 
 		addAsChild(new ClassSelector(selectorText));
 	}
 
 	@Override
 	public void enterIdSelector(ICSSParser.IdSelectorContext ctx) {
-		String selectorText = ctx.getText().substring(1); // Todo substring voelt hacky, op een andere manier???
+		String selectorText = ctx.getText().substring(1);
 
 		addAsChild(new IdSelector(selectorText));
 	}

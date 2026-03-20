@@ -1,6 +1,7 @@
 package nl.han.ica.icss.checker;
 
 import nl.han.ica.datastructures.IHANLinkedList;
+import nl.han.ica.datastructures.LinkedList.HANLinkedList;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.operations.AdditiveOperation;
 import nl.han.ica.icss.ast.operations.MultiplicativeOperation;
@@ -12,7 +13,12 @@ public abstract class CheckerBase {
   protected IHANLinkedList<HashMap<String, ExpressionType>> variableTypes;
   // LinkedList is the scope of the variable: the hashmap at index 0 is a global scope, 1 is in a stylerule, 2 in an if statement etc
 
+  protected HashMap<String, ExpressionType> getCurrentScope() {
+    return variableTypes.get(variableTypes.getSize()-1);
+  }
+
   protected ExpressionType getVariableTypeFromName(String variableName) {
+    // todo scoping
     for (HashMap<String, ExpressionType> scopeVariableMap : variableTypes) {
       ExpressionType result = scopeVariableMap.get(variableName);
       if (result != null) {
@@ -28,12 +34,12 @@ public abstract class CheckerBase {
     node.setError("Variable with name %s is not defined".formatted(variableName));
   }
 
-  protected void addVariableTypeMismatchError(ASTNode node, String variableName, ExpressionType actualType, ExpressionType targetType) {
-    node.setError("Variable %s of type %s does not match the target type %s".formatted(variableName, actualType, targetType));
+  protected void addPropertyInvalidValueError(ASTNode node, String propertyName, IHANLinkedList<ExpressionType> allowedTypes, ExpressionType usedType) {
+    node.setError("Property %s has an invalid value. Allowed values are %s, used property is %s".formatted(propertyName, allowedTypes.toString(", "), usedType));
   }
 
-  protected void addVariableTypeMismatchError(ASTNode node, String variableName, ExpressionType actualType) {
-    node.setError("Variable %s of type %s does not match the target type".formatted(variableName, actualType));
+  protected void addPropertyInvalidValueError(ASTNode node, String propertyName, ExpressionType allowedType, ExpressionType usedType) {
+    addPropertyInvalidValueError(node, propertyName, new HANLinkedList<>(allowedType), usedType);
   }
   // endregion
 

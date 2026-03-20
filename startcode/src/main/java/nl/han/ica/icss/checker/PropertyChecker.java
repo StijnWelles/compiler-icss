@@ -38,7 +38,7 @@ public class PropertyChecker extends CheckerBase {
     ExpressionGroup expressionGroup = validProperties.get(declaration.property.name);
 
     if (expressionGroup == null) {
-      declaration.setError("Property %s is niet toegestaan.".formatted(declaration.property.name));
+      declaration.setError("Property %s does not exist.".formatted(declaration.property.name));
       return;
     }
 
@@ -49,24 +49,10 @@ public class PropertyChecker extends CheckerBase {
   }
 
   private void checkColorDeclaration(Declaration declaration) {
-    if (declaration.expression instanceof VariableReference variableReference) {
-      ExpressionType variableType = getVariableTypeFromName(variableReference.name);
+    ExpressionType type = getType(declaration.expression);
 
-      if (variableType == null) {
-        return;
-      }
-
-      if (variableType != ExpressionType.COLOR) {
-        declaration.setError("Variable %s (type %s) cannot be used for property %s (type %s)."
-                .formatted(variableReference.name, variableType, declaration.property.name, ExpressionType.COLOR));
-      }
-
-      return;
-    }
-
-    if (!(declaration.expression instanceof ColorLiteral)) {
-      declaration.setError("Property %s heeft een ongeldige waarde: type %s is hier niet toegestaan.."
-              .formatted(declaration.property.name, declaration.expression.getNodeLabel()));
+    if (type != ExpressionType.COLOR) {
+      addPropertyInvalidValueError(declaration, declaration.property.name, ExpressionType.COLOR, type);
     }
   }
 
@@ -75,7 +61,7 @@ public class PropertyChecker extends CheckerBase {
     ExpressionType resultType = getType(exp);
 
     if (!allowedSizeTypes.has(resultType)) {
-      exp.setError("Type %s not allowed in property %s.".formatted(resultType, propertyName));
+      addPropertyInvalidValueError(exp, propertyName, allowedSizeTypes, resultType);
     }
   }
 

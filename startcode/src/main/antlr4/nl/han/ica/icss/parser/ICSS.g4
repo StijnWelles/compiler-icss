@@ -52,7 +52,7 @@ variable: variableName ASSIGNMENT_OPERATOR expression SEMICOLON;
 
 
 // Properties in rule
-property: declaration | if_clause;
+property: declaration | if_clause | variable;
 property_name: LOWER_IDENT;
 declaration: property_name COLON expression SEMICOLON;
 literal: COLOR #colorLiteral

@@ -1,9 +1,11 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.types.EnterScope;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class IfClause extends ASTNode {
+public class IfClause extends ASTNode implements EnterScope {
 
 
     public Expression conditionalExpression;
