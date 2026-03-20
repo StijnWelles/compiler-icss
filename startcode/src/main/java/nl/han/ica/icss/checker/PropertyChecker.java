@@ -103,7 +103,7 @@ public class PropertyChecker extends CheckerBase {
       return lhsType;
     }
 
-    return ExpressionType.UNDEFINED;
+    throw new IllegalArgumentException("Operation type %s unknown".formatted(o.getClass().getName()));
   }
 
   private ExpressionType getType(Expression e) {
@@ -119,7 +119,7 @@ public class PropertyChecker extends CheckerBase {
       return getAndValidateOperationType(o);
     }
 
-    return ExpressionType.UNDEFINED;
+    throw new IllegalArgumentException("Expression type %s unknown".formatted(e.getClass().getName()));
   }
 
   // todo resolving variables
