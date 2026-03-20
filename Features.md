@@ -34,4 +34,3 @@
 
 
 # Bugs
-- Operation in variable assignment (bv `ParWidth := 500px + 5px;`) werkt niet
