@@ -90,7 +90,7 @@ public class Checker extends CheckerBase {
   }
 
   private void handle(IfClause ifClause) {
-    ExpressionType type = propertyChecker.getType(ifClause.conditionalExpression);
+    ExpressionType type = getType(ifClause.conditionalExpression);
 
     if (type != ExpressionType.BOOL) {
       ifClause.setError("If clause condition must be of type %s, given type is %s".formatted(ExpressionType.BOOL, type));
