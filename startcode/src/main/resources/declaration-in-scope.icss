@@ -1,0 +1,35 @@
+LinkColor := #ff0000;
+ParWidth := 500px;
+AdjustColor := TRUE;
+UseLinkColor := FALSE;
+
+p {
+    EersteScope := 50%;
+	background-color: #ffffff;
+	width: ParWidth;
+	if[AdjustColor] {
+	    color: #124532;
+	    TweedeScope := 49px;
+	    if[UseLinkColor]{
+	        DerdeScope := #123456;
+	        background-color: DerdeScope;
+	    } else {
+	        background-color: #000000;
+	        width: TweedeScope;
+	    }
+	}
+	height: EersteScope;
+}
+
+a {
+	color: LinkColor;
+}
+
+#menu {
+	width: ParWidth + 2 * 10px + 5px * 5;
+}
+
+.menu {
+	color: #000000;
+	background-color: LinkColor;
+}
