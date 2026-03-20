@@ -64,6 +64,8 @@ public class Checker extends CheckerBase {
       handle(variableReference);
     } else if (node instanceof Declaration declaration) {
       propertyChecker.check(declaration);
+    } else if (node instanceof IfClause ifClause) {
+      handle(ifClause);
     }
   }
 
@@ -85,5 +87,13 @@ public class Checker extends CheckerBase {
 
   private void handle(VariableReference variableReference) {
     addErrorIfVariableNotDefined(variableReference, variableReference.name);
+  }
+
+  private void handle(IfClause ifClause) {
+    ExpressionType type = propertyChecker.getType(ifClause.conditionalExpression);
+
+    if (type != ExpressionType.BOOL) {
+      ifClause.setError("If clause condition must be of type %s, given type is %s".formatted(ExpressionType.BOOL, type));
+    }
   }
 }

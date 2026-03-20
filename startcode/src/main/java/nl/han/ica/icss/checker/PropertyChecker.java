@@ -106,7 +106,7 @@ public class PropertyChecker extends CheckerBase {
     throw new IllegalArgumentException("Operation type %s unknown".formatted(o.getClass().getName()));
   }
 
-  private ExpressionType getType(Expression e) {
+  public ExpressionType getType(Expression e) {
     if (e instanceof Literal l) {
       return l.getExpressionType();
     }

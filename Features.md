@@ -19,7 +19,7 @@
 - [x] CH02 - Operation regels: geen pixels/percentages mixen, bij plus/min moeten beide hetzelfde zijn, bij keer mag er maximaal 1 non-scalar value zijn.
 - [x] CH03 - Geen kleuren in operations
 - [x] CH04 - Controleren of de juiste type wordt gebruikt bij de properties
-- [ ] CH05 - Controleren of de condition bij een if clause type boolean is
+- [x] CH05 - Controleren of de condition bij een if clause type boolean is
 - [ ] CH06 - Controleren of variabelen binnen de scope worden gebruikt
 
 # Transforming
