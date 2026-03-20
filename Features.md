@@ -2,7 +2,7 @@
 - [x] PA00 - Gebruik maken van eigen `Stack<T>` implementatie
 - [x] PA01 - Parsen van level0 > Eenvoudige taal
 - [x] PA02 - Parsen van level1 > Toewijzen en gebruik van variabelen
-	- [ ] Parsen van variabelen binnen een andere scope en de scope opslaan
+	- [x] Parsen van variabelen binnen een andere scope en de scope opslaan
 - [x] PA03 - Parsen van level2 > Plus, min, keer operations
 - [x] PA04 - Parsen van level3 > If/else
 - [ ] Hex kleuren notatie parsen volgens [de standard](https://www.w3.org/TR/css-color-4/#hex-notation), de mogelijke opties zijn:
@@ -21,7 +21,7 @@
 - [x] CH03 - Geen kleuren in operations
 - [x] CH04 - Controleren of de juiste type wordt gebruikt bij de properties
 - [x] CH05 - Controleren of de condition bij een if clause type boolean is
-- [ ] CH06 - Controleren of variabelen binnen de scope worden gebruikt
+- [x] CH06 - Controleren of variabelen binnen de scope worden gebruikt
 
 # Transforming
 - [ ] TR01 - Expressions evalueren, alle Operations vervangen met een Literal

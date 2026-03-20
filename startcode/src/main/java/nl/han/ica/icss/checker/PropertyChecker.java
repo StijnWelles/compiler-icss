@@ -56,7 +56,6 @@ public class PropertyChecker extends CheckerBase {
     }
   }
 
-  // todo resolving variables
   private void validateExpression(Expression exp, String propertyName) {
     ExpressionType resultType = getType(exp);
 
