@@ -31,6 +31,3 @@
 # Generating
 - [ ] GE01 - Omzetten AST naar CSS2-compliant string
 - [ ] GE02 - Per scopeniveau twee spaties toevoegen
-
-
-# Bugs

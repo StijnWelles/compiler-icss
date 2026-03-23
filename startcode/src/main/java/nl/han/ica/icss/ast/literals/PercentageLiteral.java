@@ -5,9 +5,7 @@ import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.Objects;
 
-public class PercentageLiteral extends Literal {
-    public int value;
-
+public class PercentageLiteral extends NumericLiteral {
     public PercentageLiteral(int value) {
         this.value = value;
     }

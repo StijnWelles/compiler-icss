@@ -6,4 +6,9 @@ public class AddOperation extends AdditiveOperation {
     public String getNodeLabel() {
         return "Add";
     }
+
+    @Override
+    public int eval(int a, int b) {
+        return a + b;
+    }
 }

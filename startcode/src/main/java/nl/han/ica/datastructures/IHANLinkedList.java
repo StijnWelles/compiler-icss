@@ -1,5 +1,7 @@
 package nl.han.ica.datastructures;
 
+import nl.han.ica.datastructures.LinkedList.LinkedListNode;
+
 public interface IHANLinkedList<T> extends Iterable<T> {
     /**
      * Adds value to the front of the list
@@ -29,7 +31,7 @@ public interface IHANLinkedList<T> extends Iterable<T> {
      * Deletes value at position
      * @param pos position where value is deleted
      */
-    void delete(int pos);
+    T delete(int pos);
 
     /**
      * Returns generic value T at postion

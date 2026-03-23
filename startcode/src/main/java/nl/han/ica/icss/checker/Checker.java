@@ -12,7 +12,7 @@ public class Checker extends CheckerBase {
 
   public void check(AST ast) {
     variableTypes = new HANLinkedList<>();
-    variableTypes.insert(new HashMap<>()); // Global scope
+//    variableTypes.insert(new HashMap<>()); // Global scope
 
     propertyChecker = new PropertyChecker(variableTypes);
 
@@ -47,6 +47,7 @@ public class Checker extends CheckerBase {
   }
 
   private void checkNode(ASTNode node) {
+    // Todo dubbele declaration weghalen
     switch (node) {
       case VariableAssignment variableAssignment -> handle(variableAssignment);
       case VariableReference variableReference -> handle(variableReference);
@@ -75,18 +76,6 @@ public class Checker extends CheckerBase {
     ExpressionType type = getType(variableAssignment.expression);
 
     getCurrentScope().put(variableAssignment.name.name, type);
-
-//    if (variableAssignment.expression instanceof Literal literal) {
-//      variableTypes.get(0).put(variableAssignment.name.name, literal.getExpressionType());
-//    } else if (variableAssignment.expression instanceof VariableReference variableReference) {
-//      ExpressionType result = getVariableTypeFromName(variableReference.name);
-//
-//      if (result == null) {
-//        addVariableNotDefinedError(variableAssignment, variableReference.name);
-//      }
-//
-//      variableTypes.get(0).put(variableAssignment.name.name, result);
-//    }
   }
 
   private void handle(VariableReference variableReference) {

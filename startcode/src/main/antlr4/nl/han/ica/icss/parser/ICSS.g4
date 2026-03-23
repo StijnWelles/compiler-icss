@@ -45,7 +45,7 @@ ASSIGNMENT_OPERATOR: ':=';
 //--- PARSER: ---
 stylesheet: statement* EOF;
 
-statement: stylerule | variable;
+statement: stylerule | if_clause | variable;
 stylerule: selector OPEN_BRACE property* CLOSE_BRACE; // todo multiple selectors with comma seperators
 variableName: CAPITAL_IDENT;
 variable: variableName ASSIGNMENT_OPERATOR expression SEMICOLON;

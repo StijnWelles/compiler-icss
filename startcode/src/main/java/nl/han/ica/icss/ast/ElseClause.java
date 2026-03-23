@@ -17,6 +17,11 @@ public class ElseClause extends ASTNode implements EnterScope {
     }
 
     @Override
+    public ArrayList<ASTNode> getBody() {
+        return body;
+    }
+
+    @Override
     public String getNodeLabel() {
         return "Else_Clause";
     }
@@ -32,6 +37,16 @@ public class ElseClause extends ASTNode implements EnterScope {
     public ASTNode addChild(ASTNode child) {
 
         body.add(child);
+
+        return this;
+    }
+    @Override
+    public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
+        int index = body.indexOf(originalNode);
+
+        if (index != -1) {
+            body.set(index, newNode);
+        }
 
         return this;
     }

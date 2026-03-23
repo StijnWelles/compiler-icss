@@ -26,4 +26,17 @@ public abstract class Operation extends Expression {
         }
         return this;
     }
+
+    @Override
+    public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
+        if (lhs == originalNode) {
+            lhs = (Expression) newNode;
+        } else if (rhs == originalNode) {
+            rhs = (Expression) newNode;
+        }
+
+        return this;
+    }
+
+    public abstract int eval(int a, int b);
 }

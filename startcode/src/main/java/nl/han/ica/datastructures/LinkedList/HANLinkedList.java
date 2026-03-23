@@ -70,7 +70,15 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
   }
 
   @Override
-  public void delete(int pos) {
+  public T delete(int pos) {
+    if (pos == 0) {
+      LinkedListNode<T> cur = getNodeAtPosition(pos);
+
+      firstNode = cur.getNext();
+
+      return cur.getValue();
+    }
+
     LinkedListNode<T> prev = getNodeAtPosition(pos-1);
     LinkedListNode<T> cur = getNodeAtPosition(pos);
 
@@ -79,6 +87,8 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
     }
 
     prev.setNext(cur.getNext());
+
+    return cur.getValue();
   }
 
   @Override

@@ -18,7 +18,6 @@ public abstract class CheckerBase {
   }
 
   protected ExpressionType getVariableTypeFromName(String variableName) {
-    // todo scoping
     for (HashMap<String, ExpressionType> scopeVariableMap : variableTypes) {
       ExpressionType result = scopeVariableMap.get(variableName);
       if (result != null) {

@@ -29,6 +29,17 @@ public class VariableAssignment extends ASTNode {
 	}
 
 	@Override
+	public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
+		if (name == originalNode) {
+			name = (VariableReference) newNode;
+		} else if (expression == originalNode) {
+			expression = (Expression) newNode;
+		}
+
+		return this;
+	}
+
+	@Override
 	public ArrayList<ASTNode> getChildren() {
 
 		ArrayList<ASTNode> children = new ArrayList<>();

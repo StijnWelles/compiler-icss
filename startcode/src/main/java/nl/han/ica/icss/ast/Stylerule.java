@@ -6,53 +6,76 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Stylerule extends ASTNode implements EnterScope {
-	
-	public ArrayList<Selector> selectors = new ArrayList<>();
-	public ArrayList<ASTNode> body = new ArrayList<>();
 
-    public Stylerule() { }
+  public ArrayList<Selector> selectors = new ArrayList<>();
+  public ArrayList<ASTNode> body = new ArrayList<>();
 
-    public Stylerule(Selector selector, ArrayList<ASTNode> body) {
+  public Stylerule() { }
 
-    	this.selectors = new ArrayList<>();
-    	this.selectors.add(selector);
-    	this.body = body;
+  public Stylerule(Selector selector, ArrayList<ASTNode> body) {
+
+    this.selectors = new ArrayList<>();
+    this.selectors.add(selector);
+    this.body = body;
+  }
+
+  @Override
+  public ArrayList<ASTNode> getBody() {
+    return body;
+  }
+
+  @Override
+  public String getNodeLabel() {
+    return "Stylerule";
+  }
+  @Override
+  public ArrayList<ASTNode> getChildren() {
+    ArrayList<ASTNode> children = new ArrayList<>();
+    children.addAll(selectors);
+    children.addAll(body);
+
+    return children;
+  }
+
+  @Override
+  public ASTNode addChild(ASTNode child) {
+    if(child instanceof Selector)
+      selectors.add((Selector) child);
+    else
+      body.add(child);
+
+    return this;
+  }
+  @Override
+  public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
+    if (newNode instanceof Selector s) {
+      int index = selectors.indexOf((Selector) originalNode);
+
+      if (index != -1) {
+        selectors.set(index, s);
+      }
+    } else {
+      int index = body.indexOf(originalNode);
+
+      if (index != -1) {
+        body.set(index, newNode);
+      }
     }
 
-    @Override
-	public String getNodeLabel() {
-		return "Stylerule";
-	}
-	@Override
-	public ArrayList<ASTNode> getChildren() {
-		ArrayList<ASTNode> children = new ArrayList<>();
-		children.addAll(selectors);
-		children.addAll(body);
+    return this;
+  }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Stylerule stylerule = (Stylerule) o;
+    return Objects.equals(selectors, stylerule.selectors) &&
+            Objects.equals(body, stylerule.body);
+  }
 
-		return children;
-	}
-
-    @Override
-    public ASTNode addChild(ASTNode child) {
-		if(child instanceof Selector)
-			selectors.add((Selector) child);
-		else
-        	body.add(child);
-
-		return this;
-    }
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		Stylerule stylerule = (Stylerule) o;
-		return Objects.equals(selectors, stylerule.selectors) &&
-				Objects.equals(body, stylerule.body);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(selectors, body);
-	}
+  @Override
+  public int hashCode() {
+    return Objects.hash(selectors, body);
+  }
 }

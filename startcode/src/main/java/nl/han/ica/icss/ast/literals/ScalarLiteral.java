@@ -5,9 +5,7 @@ import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.Objects;
 
-public class ScalarLiteral extends Literal {
-    public int value;
-
+public class ScalarLiteral extends NumericLiteral {
     public ScalarLiteral(int value) {
         this.value = value;
     }

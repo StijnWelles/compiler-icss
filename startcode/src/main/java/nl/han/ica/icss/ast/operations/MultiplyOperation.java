@@ -6,4 +6,9 @@ public class MultiplyOperation extends MultiplicativeOperation {
     public String getNodeLabel() {
         return "Multiply";
     }
+
+    @Override
+    public int eval(int a, int b) {
+        return a * b;
+    }
 }

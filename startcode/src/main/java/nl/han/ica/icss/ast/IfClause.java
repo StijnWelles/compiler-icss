@@ -3,6 +3,7 @@ package nl.han.ica.icss.ast;
 import nl.han.ica.icss.ast.types.EnterScope;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class IfClause extends ASTNode implements EnterScope {
@@ -24,6 +25,11 @@ public class IfClause extends ASTNode implements EnterScope {
         this.conditionalExpression = conditionalExpression;
         this.body = body;
         this.elseClause = elseClause;
+    }
+
+    @Override
+    public List<ASTNode> getBody() {
+        return body;
     }
 
     @Override
@@ -49,6 +55,22 @@ public class IfClause extends ASTNode implements EnterScope {
             elseClause = (ElseClause) child;
         else
             body.add(child);
+
+        return this;
+    }
+    @Override
+    public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
+        if (newNode instanceof Expression e) {
+            conditionalExpression = e;
+        } else if (newNode instanceof ElseClause e) {
+            elseClause = e;
+        } else {
+            int index = body.indexOf(originalNode);
+
+            if (index != -1) {
+                body.set(index, newNode);
+            }
+        }
 
         return this;
     }

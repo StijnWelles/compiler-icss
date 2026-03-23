@@ -5,9 +5,7 @@ import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.Objects;
 
-public class PixelLiteral extends Literal {
-    public int value;
-
+public class PixelLiteral extends NumericLiteral {
     public PixelLiteral(int value) {
         this.value = value;
     }

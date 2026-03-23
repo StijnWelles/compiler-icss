@@ -41,6 +41,16 @@ public class Declaration extends ASTNode {
 		}
 		return this;
 	}
+	@Override
+	public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
+		if (newNode instanceof PropertyName p) {
+			property = p;
+		} else if (newNode instanceof Expression e) {
+			expression = e;
+		}
+
+		return this;
+	}
 
 	@Override
 	public boolean equals(Object o) {
