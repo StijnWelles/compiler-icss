@@ -3,7 +3,6 @@ package nl.han.ica.icss.ast;
 import java.util.ArrayList;
 
 public abstract class Operation extends Expression {
-
     public Expression lhs;
     public Expression rhs;
 

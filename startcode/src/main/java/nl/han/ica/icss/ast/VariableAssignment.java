@@ -8,7 +8,6 @@ import java.util.Objects;
  *
  */
 public class VariableAssignment extends ASTNode {
-	
 	public VariableReference name;
 	public Expression expression;
 
@@ -41,7 +40,6 @@ public class VariableAssignment extends ASTNode {
 
 	@Override
 	public ArrayList<ASTNode> getChildren() {
-
 		ArrayList<ASTNode> children = new ArrayList<>();
 		if(name != null)
 			children.add(name);

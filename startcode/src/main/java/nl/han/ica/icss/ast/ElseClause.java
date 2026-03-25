@@ -25,6 +25,7 @@ public class ElseClause extends ASTNode implements EnterScope {
     public String getNodeLabel() {
         return "Else_Clause";
     }
+
     @Override
     public ArrayList<ASTNode> getChildren() {
         ArrayList<ASTNode> children = new ArrayList<>();
@@ -40,6 +41,7 @@ public class ElseClause extends ASTNode implements EnterScope {
 
         return this;
     }
+
     @Override
     public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
         int index = body.indexOf(originalNode);
@@ -50,6 +52,7 @@ public class ElseClause extends ASTNode implements EnterScope {
 
         return this;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,7 +66,4 @@ public class ElseClause extends ASTNode implements EnterScope {
     public int hashCode() {
         return Objects.hash(body);
     }
-
-
-
 }

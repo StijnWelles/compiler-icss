@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Stylerule extends ASTNode implements EnterScope {
-
   public ArrayList<Selector> selectors = new ArrayList<>();
   public ArrayList<ASTNode> body = new ArrayList<>();
 
   public Stylerule() { }
 
   public Stylerule(Selector selector, ArrayList<ASTNode> body) {
-
     this.selectors = new ArrayList<>();
     this.selectors.add(selector);
     this.body = body;
@@ -38,6 +36,7 @@ public class Stylerule extends ASTNode implements EnterScope {
   public String getNodeLabel() {
     return "Stylerule";
   }
+
   @Override
   public ArrayList<ASTNode> getChildren() {
     ArrayList<ASTNode> children = new ArrayList<>();
@@ -56,6 +55,7 @@ public class Stylerule extends ASTNode implements EnterScope {
 
     return this;
   }
+
   @Override
   public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
     if (newNode instanceof Selector s) {
@@ -74,6 +74,7 @@ public class Stylerule extends ASTNode implements EnterScope {
 
     return this;
   }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

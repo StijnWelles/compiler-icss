@@ -12,6 +12,7 @@ public class ScalarLiteral extends NumericLiteral {
     public ScalarLiteral(String text) {
         this.value = Integer.parseInt(text);
     }
+
     @Override
     public String getNodeLabel() {
         return "Scalar literal (" + value + ")";

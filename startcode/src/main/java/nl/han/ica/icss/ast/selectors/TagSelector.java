@@ -29,7 +29,6 @@ public class TagSelector extends Selector {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(tag);
     }
 

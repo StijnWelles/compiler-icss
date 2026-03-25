@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class IfClause extends ASTNode implements EnterScope {
-
-
     public Expression conditionalExpression;
     public ArrayList<ASTNode> body = new ArrayList<>();
     public ElseClause elseClause;
@@ -16,12 +14,11 @@ public class IfClause extends ASTNode implements EnterScope {
     public IfClause() { }
 
     public IfClause(Expression conditionalExpression, ArrayList<ASTNode> body) {
-
         this.conditionalExpression = conditionalExpression;
         this.body = body;
     }
-    public IfClause(Expression conditionalExpression, ArrayList<ASTNode> body, ElseClause elseClause) {
 
+    public IfClause(Expression conditionalExpression, ArrayList<ASTNode> body, ElseClause elseClause) {
         this.conditionalExpression = conditionalExpression;
         this.body = body;
         this.elseClause = elseClause;
@@ -36,6 +33,7 @@ public class IfClause extends ASTNode implements EnterScope {
     public String getNodeLabel() {
         return "If_Clause";
     }
+
     @Override
     public ArrayList<ASTNode> getChildren() {
         ArrayList<ASTNode> children = new ArrayList<>();
@@ -58,6 +56,7 @@ public class IfClause extends ASTNode implements EnterScope {
 
         return this;
     }
+
     @Override
     public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
         if (newNode instanceof Expression e) {
@@ -74,6 +73,7 @@ public class IfClause extends ASTNode implements EnterScope {
 
         return this;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,5 +98,6 @@ public class IfClause extends ASTNode implements EnterScope {
     public Expression getConditionalExpression() {
         return conditionalExpression;
     }
+
     public ElseClause getElseClause() { return elseClause; }
 }

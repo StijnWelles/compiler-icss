@@ -11,63 +11,64 @@ import java.util.Objects;
  *
  */
 public class Stylesheet extends ASTNode implements EnterScope {
+  public ArrayList<ASTNode> body;
 
+  public Stylesheet() {
+    this.body = new ArrayList<>();
+  }
+  public Stylesheet(ArrayList<ASTNode> body) {
+    this.body = body;
+  }
 
-	public ArrayList<ASTNode> body;
-	
-	public Stylesheet() {
-		this.body = new ArrayList<>();
-	}
-	public Stylesheet(ArrayList<ASTNode> body) {
-		this.body = body;
-	}
+  @Override
+  public ArrayList<ASTNode> getBody() {
+    return body;
+  }
 
-	@Override
-	public ArrayList<ASTNode> getBody() {
-		return body;
-	}
+  @Override
+  public String getNodeLabel() {
+    return "Stylesheet";
+  }
 
-	@Override
-	public String getNodeLabel() {
-		return "Stylesheet";
-	}
-	@Override
-	public ArrayList<ASTNode> getChildren() {
-		return this.body;
-	}
-	@Override
-	public ASTNode addChild(ASTNode child) {
-	    	body.add(child);
-	    	return this;
-	}
-	@Override
-	public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
-		int index = body.indexOf(originalNode);
+  @Override
+  public ArrayList<ASTNode> getChildren() {
+    return this.body;
+  }
 
-		if (index != -1) {
-			body.set(index, newNode);
-		}
+  @Override
+  public ASTNode addChild(ASTNode child) {
+    body.add(child);
+    return this;
+  }
 
-		return this;
-	}
-	@Override
-	public ASTNode removeChild(ASTNode child) {
-		body.remove(child);
-		return this;
-	}
+  @Override
+  public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
+    int index = body.indexOf(originalNode);
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		Stylesheet that = (Stylesheet) o;
-		return Objects.equals(body, that.body);
-	}
+    if (index != -1) {
+      body.set(index, newNode);
+    }
 
-	@Override
-	public int hashCode() {
+    return this;
+  }
 
-		return Objects.hash(body);
-	}
+  @Override
+  public ASTNode removeChild(ASTNode child) {
+    body.remove(child);
+    return this;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Stylesheet that = (Stylesheet) o;
+    return Objects.equals(body, that.body);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(body);
+  }
 }

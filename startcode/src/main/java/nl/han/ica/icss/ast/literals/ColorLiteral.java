@@ -11,11 +11,11 @@ public class ColorLiteral extends Literal {
     public ColorLiteral(String value) {
         this.value = value;
     }
+
     @Override
     public String getNodeLabel() {
         return "Color literal (" + value + ")";
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -17,6 +17,7 @@ public class Declaration extends ASTNode {
 		super();
 		this.property = new PropertyName(property);
 	}
+
 	@Override
 	public String getNodeLabel() {
 	    return "Declaration";
@@ -32,6 +33,7 @@ public class Declaration extends ASTNode {
 		    children.add(expression);
 		return children;
 	}
+
 	@Override
 	public ASTNode addChild(ASTNode child) {
 		if(child instanceof PropertyName) {
@@ -41,6 +43,7 @@ public class Declaration extends ASTNode {
 		}
 		return this;
 	}
+
 	@Override
 	public ASTNode replaceChild(ASTNode originalNode, ASTNode newNode) {
 		if (newNode instanceof PropertyName p) {
@@ -61,6 +64,7 @@ public class Declaration extends ASTNode {
 		return Objects.equals(property, that.property) &&
 				Objects.equals(expression, that.expression);
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(property, expression);
