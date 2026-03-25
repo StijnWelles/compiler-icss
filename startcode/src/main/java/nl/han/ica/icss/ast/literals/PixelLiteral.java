@@ -35,4 +35,10 @@ public class PixelLiteral extends NumericLiteral {
     public ExpressionType getExpressionType() {
         return ExpressionType.PIXEL;
     }
+
+    @Override
+    public void generate(StringBuilder stringBuilder) {
+        stringBuilder.append(value);
+        stringBuilder.append("px");
+    }
 }

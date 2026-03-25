@@ -31,4 +31,10 @@ public class IdSelector extends Selector {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public void generate(StringBuilder stringBuilder) {
+        stringBuilder.append('#');
+        stringBuilder.append(id);
+    }
 }

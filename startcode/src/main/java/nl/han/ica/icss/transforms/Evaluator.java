@@ -53,6 +53,14 @@ public class Evaluator extends EvaluatorBase implements Transform {
       exitScope();
     }
 
+    for (int i = curNode.getChildren().size() - 1; i >= 0; i--) {
+      ASTNode childNode = curNode.getChildren().get(i);
+
+      if (childNode instanceof VariableAssignment) {
+        curNode.removeChild(childNode);
+      }
+    }
+
     return newCurNode;
   }
 

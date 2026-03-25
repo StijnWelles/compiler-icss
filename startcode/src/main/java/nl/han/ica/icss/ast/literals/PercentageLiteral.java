@@ -35,4 +35,10 @@ public class PercentageLiteral extends NumericLiteral {
     public ExpressionType getExpressionType() {
         return ExpressionType.PERCENTAGE;
     }
+
+    @Override
+    public void generate(StringBuilder stringBuilder) {
+        stringBuilder.append(value);
+        stringBuilder.append('%');
+    }
 }

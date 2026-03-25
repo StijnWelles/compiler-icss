@@ -32,4 +32,10 @@ public class ClassSelector extends Selector {
     public int hashCode() {
         return Objects.hash(cls);
     }
+
+    @Override
+    public void generate(StringBuilder stringBuilder) {
+        stringBuilder.append('.');
+        stringBuilder.append(cls);
+    }
 }

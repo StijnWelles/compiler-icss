@@ -25,6 +25,16 @@ public class Stylerule extends ASTNode implements EnterScope {
   }
 
   @Override
+  public ASTNode removeChild(ASTNode child) {
+    if(child instanceof Selector) {
+      selectors.remove((Selector) child);
+    } else {
+      body.remove(child);
+    }
+    return this;
+  }
+
+  @Override
   public String getNodeLabel() {
     return "Stylerule";
   }
@@ -77,5 +87,21 @@ public class Stylerule extends ASTNode implements EnterScope {
   @Override
   public int hashCode() {
     return Objects.hash(selectors, body);
+  }
+
+  @Override
+  public void generate(StringBuilder stringBuilder) {
+    for (int i = 0; i < selectors.size() - 1; i++) { // Don't add a comma after the last one
+      selectors.get(i).generate(stringBuilder);
+      stringBuilder.append(", ");
+    }
+    selectors.getLast().generate(stringBuilder);
+
+    stringBuilder.append(" {\n");
+    for (ASTNode child : this.body) {
+      child.generate(stringBuilder);
+      stringBuilder.append("\n");
+    }
+    stringBuilder.append("}\n\n");
   }
 }
