@@ -24,7 +24,11 @@ public class Evaluator extends EvaluatorBase implements Transform {
       enterScope();
     }
 
-    ASTNode v = checkNode(curNode, parent);
+    ASTNode newCurNode = checkNode(curNode, parent);
+
+    if (newCurNode == null) {
+      newCurNode = curNode;
+    }
 
     boolean hasExitedScope = false;
     for (ASTNode childNode : curNode.getChildren()) {
@@ -38,7 +42,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
         hasExitedScope = true;
       }
 
-      ASTNode newNode = walkThroughAST(childNode, curNode);
+      ASTNode newNode = walkThroughAST(childNode, newCurNode);
 
       if (newNode != null) {
         curNode.replaceChild(childNode, newNode);
@@ -49,7 +53,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
       exitScope();
     }
 
-    return v;
+    return newCurNode;
   }
 
   private void enterScope() {
@@ -78,7 +82,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
       case VariableAssignment variableAssignment -> handle(variableAssignment);
 //      case Declaration declaration -> handle(declaration);
       case Expression expression -> handle(expression);
-      case IfClause ifClause -> handle(ifClause, (EnterScope) parent);
+      case IfClause ifClause -> handle(ifClause, parent);
       default -> node;
     };
   }
@@ -101,9 +105,9 @@ public class Evaluator extends EvaluatorBase implements Transform {
 //    return null;
 //  }
 
-  private ASTNode handle(IfClause ifClause, EnterScope parent) {
+  private ASTNode handle(IfClause ifClause, ASTNode parent) {
     BoolLiteral b = (BoolLiteral) getLiteral(ifClause.conditionalExpression);
-    List<ASTNode> parentBody = parent.getBody();
+    List<ASTNode> parentBody = ((EnterScope) parent).getBody();
     List<ASTNode> toAdd;
 
     if (b.value) {
@@ -115,10 +119,10 @@ public class Evaluator extends EvaluatorBase implements Transform {
     int index = parentBody.indexOf(ifClause);
     parentBody.remove(ifClause);
 
-    for (ASTNode n : toAdd) {
-      parentBody.add(index, n);
+    for (int i = 0; i < toAdd.size(); i++) {
+      parentBody.add(index + i, toAdd.get(i));
     }
 
-    return null;
+    return parent;
   }
 }
