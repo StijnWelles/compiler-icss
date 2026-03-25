@@ -5,7 +5,7 @@ import nl.han.ica.icss.checker.SemanticError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ASTNode {
+public abstract class ASTNode {
 
     private SemanticError error = null;
 
