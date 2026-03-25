@@ -14,6 +14,7 @@
 - [ ] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b)
 - [ ] Scalar: Kommagetallen
 - [ ] Comments in css
+- [ ] Expression in if (groter dan etc)
 
 # Checking
 - [x] CH01 - Error bij gebruik van niet-gedefinieerde variabelen
@@ -24,10 +25,10 @@
 - [x] CH06 - Controleren of variabelen binnen de scope worden gebruikt
 
 # Transforming
-- [ ] TR01 - Expressions evalueren, alle Operations vervangen met een Literal
-- [ ] TR02 - If/else evalueren, juiste body selecteren op basis van de waarde van de boolean.
+- [x] TR01 - Expressions evalueren, alle Operations vervangen met een Literal
+- [x] TR02 - If/else evalueren, juiste body selecteren op basis van de waarde van de boolean.
 - [ ] Optimalisatie: dubbele statements weghalen, bijv: `height: 20px; height: 50px;` wordt `height: 50px;` omdat de 20px redundant is.
 
 # Generating
-- [ ] GE01 - Omzetten AST naar CSS2-compliant string
-- [ ] GE02 - Per scopeniveau twee spaties toevoegen
+- [x] GE01 - Omzetten AST naar CSS2-compliant string
+- [x] GE02 - Per scopeniveau twee spaties toevoegen
