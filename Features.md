@@ -10,7 +10,7 @@
 	- 8 getallen `#0000ffcc` (komt overeen met `rgb(0 255 0)` met 80% transparantie)
 	- 3 getallen `#f00` (komt overeen met `#ff0000`)
 	- 4 getallen `#00fc` (komt overeen met `#0000ffcc`)
-- [ ] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b) 
+- [x] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b) 
 - [ ] Comments in css
 - [ ] Expression in if (groter dan etc)
 

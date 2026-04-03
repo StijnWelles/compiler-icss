@@ -51,7 +51,7 @@ ASSIGNMENT_OPERATOR: ':=';
 stylesheet: statement* EOF;
 
 statement: stylerule | if_clause | variable;
-stylerule: selector OPEN_BRACE property* CLOSE_BRACE; // todo multiple selectors with comma seperators
+stylerule: multiple_selectors OPEN_BRACE property* CLOSE_BRACE;
 variableName: CAPITAL_IDENT;
 variable: variableName ASSIGNMENT_OPERATOR expression SEMICOLON;
 
@@ -76,7 +76,8 @@ if_clause: IF BOX_BRACKET_OPEN literal BOX_BRACKET_CLOSE
 else_clause: ELSE OPEN_BRACE property* CLOSE_BRACE;
 
 
-//
+// Selectors
+multiple_selectors: selector (',' selector)*;
 selector
     : LOWER_IDENT #tagSelector
     | CLASS_IDENT #classSelector
