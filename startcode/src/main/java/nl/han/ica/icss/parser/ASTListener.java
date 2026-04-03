@@ -40,6 +40,7 @@ public class ASTListener extends ICSSBaseListener {
 		stack.peek().addChild(node);
 	}
 
+	// region Stylesheet/rule
 	@Override
 	public void enterStylesheet(ICSSParser.StylesheetContext ctx) {
 		Stylesheet stylesheet = new Stylesheet();
@@ -62,7 +63,9 @@ public class ASTListener extends ICSSBaseListener {
 	public void exitStylerule(ICSSParser.StyleruleContext ctx) {
 		stack.pop();
 	}
+	// endregion
 
+	// region Selectors
 	@Override
 	public void enterTagSelector(ICSSParser.TagSelectorContext ctx) {
 		addAsChild(new TagSelector(ctx.getText()));
@@ -81,7 +84,9 @@ public class ASTListener extends ICSSBaseListener {
 
 		addAsChild(new IdSelector(selectorText));
 	}
+	// endregion
 
+	// region Declaration
 	@Override
 	public void enterDeclaration(ICSSParser.DeclarationContext ctx) {
 		addAsChildAndSetParent(new Declaration());
@@ -96,7 +101,9 @@ public class ASTListener extends ICSSBaseListener {
 	public void enterProperty_name(ICSSParser.Property_nameContext ctx) {
 		addAsChild(new PropertyName(ctx.getText()));
 	}
+	// endregion
 
+	// region Expressions
 	@Override
 	public void enterPlusExpression(ICSSParser.PlusExpressionContext ctx) {
 		addAsChildAndSetParent(new AddOperation());
@@ -126,8 +133,9 @@ public class ASTListener extends ICSSBaseListener {
 	public void exitMultExpression(ICSSParser.MultExpressionContext ctx) {
 		stack.pop();
 	}
+	// endregion
 
-	// Literals
+	// region Literals
 	@Override
 	public void enterColorLiteral(ICSSParser.ColorLiteralContext ctx) {
 		addAsChild(new ColorLiteral(ctx.getText()));
@@ -162,8 +170,9 @@ public class ASTListener extends ICSSBaseListener {
 	public void enterVariableReferenceLiteral(ICSSParser.VariableReferenceLiteralContext ctx) {
 		addAsChild(new VariableReference(ctx.getText()));
 	}
+	// endregion
 
-	// Variables
+	// region Variables
 	@Override
 	public void enterVariable(ICSSParser.VariableContext ctx) {
 		addAsChildAndSetParent(new VariableAssignment());
@@ -178,8 +187,9 @@ public class ASTListener extends ICSSBaseListener {
 	public void enterVariableName(ICSSParser.VariableNameContext ctx) {
 		addAsChild(new VariableReference(ctx.getText()));
 	}
+	// endregion
 
-	// Conditions
+	// region Conditions
 	@Override
 	public void enterIf_clause(ICSSParser.If_clauseContext ctx) {
 		addAsChildAndSetParent(new IfClause());
@@ -199,4 +209,5 @@ public class ASTListener extends ICSSBaseListener {
 	public void exitElse_clause(ICSSParser.Else_clauseContext ctx) {
 		stack.pop();
 	}
+	// endregion
 }
