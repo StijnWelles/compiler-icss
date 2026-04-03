@@ -35,6 +35,11 @@ CAPITAL_IDENT: [A-Z] [A-Za-z0-9_]*;
 //All whitespace is skipped
 WS: [ \t\r\n]+ -> skip;
 
+// Inline comments (// ...)
+LINE_COMMENT: '//' ~[\r\n]* -> skip;
+// Block comments (/* ... */)
+BLOCK_COMMENT: '/*' .*? '*/' -> skip;
+
 //
 OPEN_BRACE: '{';
 CLOSE_BRACE: '}';

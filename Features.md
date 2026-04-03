@@ -11,7 +11,7 @@
 	- 3 getallen `#f00` (komt overeen met `#ff0000`)
 	- 4 getallen `#00fc` (komt overeen met `#0000ffcc`)
 - [x] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b) 
-- [ ] Comments in css
+- [x] Comments in css
 - [ ] Expressions: Deling
 - [ ] Expression in if (groter dan etc)
 
