@@ -1,0 +1,13 @@
+package nl.han.ica.icss.ast.operations;
+
+public class DivideOperation extends MultiplicativeOperation {
+  @Override
+  public String getNodeLabel() {
+    return "Divide";
+  }
+
+  @Override
+  public int eval(int a, int b) {
+    return a / b;
+  }
+}

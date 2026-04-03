@@ -12,7 +12,7 @@
 	- 4 getallen `#00fc` (komt overeen met `#0000ffcc`)
 - [x] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b) 
 - [x] Comments in css
-- [ ] Expressions: Deling
+- [x] Expressions: Deling
 - [ ] Expression in if (groter dan etc)
 
 # Checking

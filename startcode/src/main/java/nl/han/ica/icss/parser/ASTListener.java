@@ -5,6 +5,7 @@ import nl.han.ica.datastructures.Stack.HANStack;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.literals.*;
 import nl.han.ica.icss.ast.operations.AddOperation;
+import nl.han.ica.icss.ast.operations.DivideOperation;
 import nl.han.ica.icss.ast.operations.MultiplyOperation;
 import nl.han.ica.icss.ast.operations.SubtractOperation;
 import nl.han.ica.icss.ast.selectors.ClassSelector;
@@ -131,6 +132,16 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void exitMultExpression(ICSSParser.MultExpressionContext ctx) {
+		stack.pop();
+	}
+
+	@Override
+	public void enterDivExpression(ICSSParser.DivExpressionContext ctx) {
+		addAsChildAndSetParent(new DivideOperation());
+	}
+
+	@Override
+	public void exitDivExpression(ICSSParser.DivExpressionContext ctx) {
 		stack.pop();
 	}
 	// endregion

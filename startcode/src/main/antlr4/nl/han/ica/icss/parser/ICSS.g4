@@ -48,6 +48,7 @@ COLON: ':';
 PLUS: '+';
 MIN: '-';
 MUL: '*';
+DIV: '/';
 ASSIGNMENT_OPERATOR: ':=';
 
 
@@ -89,6 +90,7 @@ selector
 
 // Math
 expression: literal #litExpression
-          | expression MUL expression #multExpression // todo add devide
+          | expression MUL expression #multExpression
+          | expression DIV expression #divExpression
           | expression PLUS expression #plusExpression
           | expression MIN expression #minExpression;
