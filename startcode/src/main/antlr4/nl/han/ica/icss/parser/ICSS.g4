@@ -14,11 +14,16 @@ TRUE: 'TRUE';
 FALSE: 'FALSE';
 PIXELSIZE: [0-9]+ 'px';
 PERCENTAGE: [0-9]+ '%';
-SCALAR: [0-9]+; // todo kommagetallen?
+SCALAR: [0-9]+;
 
 
 //Color value takes precedence over id idents
-COLOR: '#' [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f] [0-9a-f]; // Todo add support for #000, #bbb as short for #000000, #bbbbbb according to the CSS standard
+fragment HEX: [0-9a-f];
+COLOR_6: HEX HEX HEX HEX HEX HEX;
+COLOR_8: HEX HEX HEX HEX HEX HEX HEX HEX;
+COLOR_3: HEX HEX HEX;
+COLOR_4: HEX HEX HEX HEX;
+COLOR: '#' (COLOR_6 | COLOR_8 | COLOR_3 | COLOR_4);
 
 //Specific identifiers for id's and css classes
 ID_IDENT: '#' [a-z0-9\-]+;
