@@ -9,8 +9,6 @@ import nl.han.ica.icss.ast.types.EnterScope;
 import java.util.*;
 
 public class Evaluator extends EvaluatorBase implements Transform {
-  private IHANLinkedList<PropertyName> propertiesInStyleRule;
-
   @Override
   public void apply(AST ast) {
     variableValues = new HANLinkedList<>();
@@ -31,7 +29,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
     }
 
     boolean hasExitedScope = false;
-    for (ASTNode childNode : curNode.getChildren()) {
+    for (ASTNode childNode : newCurNode.getChildren()) {
       if (curNode instanceof VariableAssignment && childNode instanceof VariableReference) {
         // Don't do checks for variable names in the assignment
         continue;
@@ -98,7 +96,9 @@ public class Evaluator extends EvaluatorBase implements Transform {
   private ASTNode handle(VariableAssignment variableAssignment) {
     Literal value = getLiteral(variableAssignment.expression);
 
-    getCurrentScope().put(variableAssignment.name.name, value);
+    if (!setVariableIfExists(variableAssignment.name.name, value)) {
+      getCurrentScope().put(variableAssignment.name.name, value);
+    }
 
     return null; // Variable doesn't need to be included in the result
   }

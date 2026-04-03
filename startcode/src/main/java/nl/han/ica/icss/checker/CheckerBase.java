@@ -43,19 +43,30 @@ public abstract class CheckerBase {
   // endregion
 
   // region Getting types
-  private ExpressionType getAndValidateOperationType(Operation o) {
-    ExpressionType lhsType = getType(o.lhs);
-    ExpressionType rhsType = getType(o.rhs);
+  private void addErrorIfTypeIfColor(Operation operation) {
+    if (getType(operation.lhs) == ExpressionType.COLOR) {
+      operation.lhs.setError("Operation may not have a color.");
+    }
+
+    if (getType(operation.rhs) == ExpressionType.COLOR) {
+      operation.rhs.setError("Operation may not have a color.");
+    }
+  }
+
+  private ExpressionType getAndValidateOperationType(Operation operation) {
+    addErrorIfTypeIfColor(operation);
+    ExpressionType lhsType = getType(operation.lhs);
+    ExpressionType rhsType = getType(operation.rhs);
 
     // If both values are not scalar and not the same type, it's a type mismatch (ex 4px+3%)
     if (lhsType != rhsType && lhsType != ExpressionType.SCALAR && rhsType != ExpressionType.SCALAR) {
-      o.setError("Cannot mix different non-scalar types %s and %s in an operation.".formatted(lhsType, rhsType));
+      operation.setError("Cannot mix different non-scalar types %s and %s in an operation.".formatted(lhsType, rhsType));
     }
 
-    if (o instanceof MultiplicativeOperation) {
+    if (operation instanceof MultiplicativeOperation) {
       // For multiplication, at least one of the leaves have to be scalar
       if (lhsType != ExpressionType.SCALAR && rhsType != ExpressionType.SCALAR) {
-        o.setError("Using 2 non-scalar literals is not allowed in a multiplicative operation.");
+        operation.setError("Using 2 non-scalar literals is not allowed in a multiplicative operation.");
         return lhsType;
       }
 
@@ -66,9 +77,9 @@ public abstract class CheckerBase {
       return lhsType;
     }
 
-    if (o instanceof AdditiveOperation) {
+    if (operation instanceof AdditiveOperation) {
       if (lhsType == ExpressionType.SCALAR || rhsType == ExpressionType.SCALAR) {
-        o.setError("Using a scalar value in an additive operation is not allowed.");
+        operation.setError("Using a scalar value in an additive operation is not allowed.");
         return lhsType;
       }
 
@@ -76,7 +87,7 @@ public abstract class CheckerBase {
       return lhsType;
     }
 
-    throw new IllegalArgumentException("Operation type %s unknown".formatted(o.getClass().getName()));
+    throw new IllegalArgumentException("Operation type %s unknown".formatted(operation.getClass().getName()));
   }
 
   protected ExpressionType getType(Expression e) {

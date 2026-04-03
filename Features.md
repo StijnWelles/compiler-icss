@@ -13,7 +13,7 @@
 - [x] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b) 
 - [x] Comments in css
 - [x] Expressions: Deling
-- [ ] Expression in if (groter dan etc)
+- [ ] (niet gedaan) Expression in if (groter dan etc)
 
 # Checking
 - [x] CH01 - Error bij gebruik van niet-gedefinieerde variabelen

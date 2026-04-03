@@ -21,6 +21,18 @@ public abstract class EvaluatorBase {
     return variableValues.get(variableValues.getSize()-1);
   }
 
+  protected boolean setVariableIfExists(String variableName, Literal value) {
+    for (HashMap<String, Literal> scopeVariableMap : variableValues) {
+      Literal result = scopeVariableMap.get(variableName);
+      if (result != null) {
+        scopeVariableMap.put(variableName, value);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   protected Literal getVariableValueFromName(String variableName) {
     for (HashMap<String, Literal> scopeVariableMap : variableValues) {
       Literal result = scopeVariableMap.get(variableName);
