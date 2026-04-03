@@ -52,11 +52,11 @@ public class PropertyChecker extends CheckerBase {
     }
   }
 
-  private void validateExpression(Expression exp, String propertyName) {
-    ExpressionType resultType = getType(exp);
+  private void validateExpression(Expression expression, String propertyName) {
+    ExpressionType resultType = getType(expression);
 
     if (!allowedSizeTypes.has(resultType)) {
-      addPropertyInvalidValueError(exp, propertyName, allowedSizeTypes, resultType);
+      addPropertyInvalidValueError(expression, propertyName, allowedSizeTypes, resultType);
     }
   }
 

@@ -7,6 +7,10 @@ public interface IHANStack<T> {
      */
     void push(T value);
 
+    /**
+     * Alias for {@link #push(T value)}
+     * @param value value to add
+     */
     default void add(T value) {
         push(value);
     }

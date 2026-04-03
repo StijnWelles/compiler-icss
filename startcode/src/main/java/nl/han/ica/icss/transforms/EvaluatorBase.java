@@ -54,38 +54,38 @@ public abstract class EvaluatorBase {
     };
   }
 
-  private NumericLiteral getOperationResult(Operation o) {
-    NumericLiteral lhsValue = (NumericLiteral) getLiteral(o.lhs);
-    NumericLiteral rhsValue = (NumericLiteral) getLiteral(o.rhs);
+  private NumericLiteral getOperationResult(Operation operation) {
+    NumericLiteral lhsValue = (NumericLiteral) getLiteral(operation.lhs);
+    NumericLiteral rhsValue = (NumericLiteral) getLiteral(operation.rhs);
 
-    if (o instanceof MultiplicativeOperation) {
+    if (operation instanceof MultiplicativeOperation) {
       if (lhsValue instanceof ScalarLiteral) {
-        return createNewInstanceWithValue(rhsValue, o.eval(lhsValue.value, rhsValue.value));
+        return createNewInstanceWithValue(rhsValue, operation.eval(lhsValue.value, rhsValue.value));
       }
-      return createNewInstanceWithValue(lhsValue, o.eval(lhsValue.value, rhsValue.value));
+      return createNewInstanceWithValue(lhsValue, operation.eval(lhsValue.value, rhsValue.value));
     }
 
-    if (o instanceof AdditiveOperation) {
-      return createNewInstanceWithValue(lhsValue, o.eval(lhsValue.value, rhsValue.value));
+    if (operation instanceof AdditiveOperation) {
+      return createNewInstanceWithValue(lhsValue, operation.eval(lhsValue.value, rhsValue.value));
     }
 
-    throw new IllegalArgumentException("Operation type %s unknown".formatted(o.getClass().getName()));
+    throw new IllegalArgumentException("Operation type %s unknown".formatted(operation.getClass().getName()));
   }
 
-  protected Literal getLiteral(Expression e) {
-    if (e instanceof Literal l) {
+  protected Literal getLiteral(Expression expression) {
+    if (expression instanceof Literal l) {
       return l;
     }
 
-    if (e instanceof VariableReference v) {
+    if (expression instanceof VariableReference v) {
       return getVariableValueFromName(v.name);
     }
 
-    if (e instanceof Operation o) {
+    if (expression instanceof Operation o) {
       return getOperationResult(o);
     }
 
-    throw new IllegalArgumentException("Expression type %s unknown".formatted(e.getClass().getName()));
+    throw new IllegalArgumentException("Expression type %s unknown".formatted(expression.getClass().getName()));
   }
   // endregion
 }

@@ -5,6 +5,8 @@ import nl.han.ica.icss.ast.Selector;
 import java.util.Objects;
 
 public class IdSelector extends Selector {
+    private final String SELECTOR_PREFIX = "#";
+
     public String id;
 
     public IdSelector(String id) {
@@ -34,7 +36,7 @@ public class IdSelector extends Selector {
 
     @Override
     public void generate(StringBuilder stringBuilder) {
-        stringBuilder.append('#');
+        stringBuilder.append(SELECTOR_PREFIX);
         stringBuilder.append(id);
     }
 }

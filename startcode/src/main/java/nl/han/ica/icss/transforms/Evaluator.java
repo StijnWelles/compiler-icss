@@ -1,10 +1,9 @@
 package nl.han.ica.icss.transforms;
 
-import nl.han.ica.datastructures.LinkedList.IHANLinkedList;
 import nl.han.ica.datastructures.LinkedList.HANLinkedList;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.literals.BoolLiteral;
-import nl.han.ica.icss.ast.types.EnterScope;
+import nl.han.ica.icss.ast.types.IEnterScope;
 
 import java.util.*;
 
@@ -12,13 +11,12 @@ public class Evaluator extends EvaluatorBase implements Transform {
   @Override
   public void apply(AST ast) {
     variableValues = new HANLinkedList<>();
-//    variableValues.insert(new HashMap<>()); // Global scope
 
     walkThroughAST(ast.root, null);
   }
 
   private ASTNode walkThroughAST(ASTNode curNode, ASTNode parent) {
-    if (curNode instanceof EnterScope) {
+    if (curNode instanceof IEnterScope) {
       enterScope();
     }
 
@@ -47,7 +45,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
       }
     }
 
-    if (curNode instanceof EnterScope && !hasExitedScope) {
+    if (curNode instanceof IEnterScope && !hasExitedScope) {
       exitScope();
     }
 
@@ -79,14 +77,14 @@ public class Evaluator extends EvaluatorBase implements Transform {
   }
 
   /**
-   * Checks the node and returns a new node if the node was changed. Returns null if the node was not changed.
+   * Checks the node and returns a new node if the node was changed. Returns the original node if nothing was changed.
    * @param node
-   * @return The new node, or null.
+   * @return The new node.
    */
   private ASTNode checkNode(ASTNode node, ASTNode parent) {
     return switch (node) {
       case VariableAssignment variableAssignment -> handle(variableAssignment);
-      case Declaration declaration -> handle(declaration, (EnterScope) parent);
+      case Declaration declaration -> handle(declaration, (IEnterScope) parent);
       case Expression expression -> handle(expression);
       case IfClause ifClause -> handle(ifClause, parent);
       default -> node;
@@ -107,7 +105,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
     return getLiteral(expression);
   }
 
-  private void removePreviousDeclarationIfExists(PropertyName propertyName, EnterScope parent, int maxIndex) {
+  private void removePreviousDeclarationIfExists(PropertyName propertyName, IEnterScope parent, int maxIndex) {
     for (int i = 0; i < maxIndex; i++) {
       if (parent.getBody().get(i) instanceof Declaration declaration) {
         if (Objects.equals(declaration.property.name, propertyName.name)) {
@@ -118,7 +116,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
     }
   }
 
-  private ASTNode handle(Declaration declaration, EnterScope parent) {
+  private ASTNode handle(Declaration declaration, IEnterScope parent) {
     removePreviousDeclarationIfExists(declaration.property, parent, parent.getBody().indexOf(declaration));
 
     return declaration;
@@ -126,7 +124,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
 
   private ASTNode handle(IfClause ifClause, ASTNode parent) {
     BoolLiteral b = (BoolLiteral) getLiteral(ifClause.conditionalExpression);
-    List<ASTNode> parentBody = ((EnterScope) parent).getBody();
+    List<ASTNode> parentBody = ((IEnterScope) parent).getBody();
     List<ASTNode> toAdd;
 
     if (b.value) {

@@ -2,7 +2,7 @@ package nl.han.ica.icss.checker;
 
 import nl.han.ica.datastructures.LinkedList.HANLinkedList;
 import nl.han.ica.icss.ast.*;
-import nl.han.ica.icss.ast.types.EnterScope;
+import nl.han.ica.icss.ast.types.IEnterScope;
 import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.HashMap;
@@ -12,7 +12,6 @@ public class Checker extends CheckerBase {
 
   public void check(AST ast) {
     variableTypes = new HANLinkedList<>();
-//    variableTypes.insert(new HashMap<>()); // Global scope
 
     propertyChecker = new PropertyChecker(variableTypes);
 
@@ -20,7 +19,7 @@ public class Checker extends CheckerBase {
   }
 
   private void walkThroughAST(ASTNode curNode) {
-    if (curNode instanceof EnterScope) {
+    if (curNode instanceof IEnterScope) {
       enterScope();
     }
 
@@ -41,7 +40,7 @@ public class Checker extends CheckerBase {
       walkThroughAST(childNode);
     }
 
-    if (curNode instanceof EnterScope && !hasExitedScope) {
+    if (curNode instanceof IEnterScope && !hasExitedScope) {
       exitScope();
     }
   }

@@ -90,20 +90,20 @@ public abstract class CheckerBase {
     throw new IllegalArgumentException("Operation type %s unknown".formatted(operation.getClass().getName()));
   }
 
-  protected ExpressionType getType(Expression e) {
-    if (e instanceof Literal l) {
+  protected ExpressionType getType(Expression expression) {
+    if (expression instanceof Literal l) {
       return l.getExpressionType();
     }
 
-    if (e instanceof VariableReference v) {
+    if (expression instanceof VariableReference v) {
       return getVariableTypeFromName(v.name);
     }
 
-    if (e instanceof Operation o) {
+    if (expression instanceof Operation o) {
       return getAndValidateOperationType(o);
     }
 
-    throw new IllegalArgumentException("Expression type %s unknown".formatted(e.getClass().getName()));
+    throw new IllegalArgumentException("Expression type %s unknown".formatted(expression.getClass().getName()));
   }
   // endregion
 }

@@ -1,12 +1,12 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.ast.types.EnterScope;
+import nl.han.ica.icss.ast.types.IEnterScope;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class IfClause extends ASTNode implements EnterScope {
+public class IfClause extends ASTNode implements IEnterScope {
     public Expression conditionalExpression;
     public ArrayList<ASTNode> body = new ArrayList<>();
     public ElseClause elseClause;

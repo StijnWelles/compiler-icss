@@ -4,6 +4,6 @@ import nl.han.ica.icss.ast.ASTNode;
 
 import java.util.List;
 
-public interface EnterScope {
+public interface IEnterScope {
   List<ASTNode> getBody();
 }

@@ -1,7 +1,6 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.ast.types.EnterScope;
-import nl.han.ica.icss.checker.SemanticError;
+import nl.han.ica.icss.ast.types.IEnterScope;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -10,7 +9,7 @@ import java.util.Objects;
  * A stylesheet is the root node of the AST, it consists of one or more statements
  *
  */
-public class Stylesheet extends ASTNode implements EnterScope {
+public class Stylesheet extends ASTNode implements IEnterScope {
   public ArrayList<ASTNode> body;
 
   public Stylesheet() {

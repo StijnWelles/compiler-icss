@@ -28,6 +28,7 @@ public interface IHANLinkedList<T> extends Iterable<T> {
     /**
      * Deletes value at position
      * @param pos position where value is deleted
+     * @return The deleted value
      */
     T delete(int pos);
 
