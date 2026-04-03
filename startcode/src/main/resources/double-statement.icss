@@ -1,0 +1,8 @@
+.menu {
+	color: #000000;
+	background-color: #fff000;
+	color: #ffffff;
+	if[TRUE] {
+	    color: #cccccc;
+	}
+}

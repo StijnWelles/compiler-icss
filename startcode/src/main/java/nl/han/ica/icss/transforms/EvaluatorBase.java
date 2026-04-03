@@ -1,6 +1,5 @@
 package nl.han.ica.icss.transforms;
 
-import jdk.jfr.Percentage;
 import nl.han.ica.datastructures.IHANLinkedList;
 import nl.han.ica.icss.ast.Expression;
 import nl.han.ica.icss.ast.Literal;
@@ -12,7 +11,6 @@ import nl.han.ica.icss.ast.literals.PixelLiteral;
 import nl.han.ica.icss.ast.literals.ScalarLiteral;
 import nl.han.ica.icss.ast.operations.AdditiveOperation;
 import nl.han.ica.icss.ast.operations.MultiplicativeOperation;
-import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.HashMap;
 
@@ -77,5 +75,5 @@ public abstract class EvaluatorBase {
 
     throw new IllegalArgumentException("Expression type %s unknown".formatted(e.getClass().getName()));
   }
-  // endregions
+  // endregion
 }

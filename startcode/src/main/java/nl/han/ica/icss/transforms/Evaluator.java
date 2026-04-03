@@ -1,15 +1,15 @@
 package nl.han.ica.icss.transforms;
 
+import nl.han.ica.datastructures.IHANLinkedList;
 import nl.han.ica.datastructures.LinkedList.HANLinkedList;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.literals.BoolLiteral;
 import nl.han.ica.icss.ast.types.EnterScope;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Evaluator extends EvaluatorBase implements Transform {
+  private IHANLinkedList<PropertyName> propertiesInStyleRule;
 
   @Override
   public void apply(AST ast) {
@@ -88,7 +88,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
   private ASTNode checkNode(ASTNode node, ASTNode parent) {
     return switch (node) {
       case VariableAssignment variableAssignment -> handle(variableAssignment);
-//      case Declaration declaration -> handle(declaration);
+      case Declaration declaration -> handle(declaration, (Stylerule) parent);
       case Expression expression -> handle(expression);
       case IfClause ifClause -> handle(ifClause, parent);
       default -> node;
@@ -107,11 +107,23 @@ public class Evaluator extends EvaluatorBase implements Transform {
     return getLiteral(expression);
   }
 
-//  private ASTNode handle(Declaration declaration) {
-//    declaration.expression = getLiteral(declaration.expression);
-//
-//    return null;
-//  }
+  private void removePreviousDeclarationIfExists(PropertyName propertyName, Stylerule parent, int maxIndex) {
+    for (int i = 0; i < maxIndex; i++) {
+      // At this stage, body of Stylerule always has declarations
+      Declaration declaration = (Declaration) parent.getBody().get(i);
+
+      if (Objects.equals(declaration.property.name, propertyName.name)) {
+        parent.removeChild(declaration);
+        return; // There is always 0 or 1 of a property in the list
+      }
+    }
+  }
+
+  private ASTNode handle(Declaration declaration, Stylerule parent) {
+    removePreviousDeclarationIfExists(declaration.property, parent, parent.getBody().indexOf(declaration));
+
+    return declaration;
+  }
 
   private ASTNode handle(IfClause ifClause, ASTNode parent) {
     BoolLiteral b = (BoolLiteral) getLiteral(ifClause.conditionalExpression);
@@ -120,8 +132,10 @@ public class Evaluator extends EvaluatorBase implements Transform {
 
     if (b.value) {
       toAdd = ifClause.getBody();
-    } else {
+    } else if (ifClause.elseClause != null) {
       toAdd = ifClause.elseClause.getBody();
+    } else {
+      toAdd = new ArrayList<>();
     }
 
     int index = parentBody.indexOf(ifClause);

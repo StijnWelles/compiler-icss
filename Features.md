@@ -27,7 +27,7 @@
 # Transforming
 - [x] TR01 - Expressions evalueren, alle Operations vervangen met een Literal
 - [x] TR02 - If/else evalueren, juiste body selecteren op basis van de waarde van de boolean.
-- [ ] Optimalisatie: dubbele statements weghalen, bijv: `height: 20px; height: 50px;` wordt `height: 50px;` omdat de 20px redundant is.
+- [x] Optimalisatie: dubbele statements weghalen, bijv: `height: 20px; height: 50px;` wordt `height: 50px;` omdat de 20px redundant is.
 
 # Generating
 - [x] GE01 - Omzetten AST naar CSS2-compliant string
