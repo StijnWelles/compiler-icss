@@ -1,11 +1,9 @@
 package nl.han.ica.datastructures.LinkedList;
 
-import nl.han.ica.datastructures.IHANLinkedList;
-
 import java.util.Iterator;
 
 public class HANLinkedList<T> implements IHANLinkedList<T> {
-  private LinkedListNode<T> firstNode;
+  private HANLinkedListNode<T> firstNode;
 
   public HANLinkedList() {}
 
@@ -21,7 +19,7 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
 
   @Override
   public void addFirst(T value) {
-    firstNode = new LinkedListNode<>(firstNode, value);
+    firstNode = new HANLinkedListNode<>(firstNode, value);
   }
 
   @Override
@@ -29,8 +27,8 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
     firstNode = null;
   }
 
-  private LinkedListNode<T> getNext(int targetIndex, LinkedListNode<T> currentNode, int currentIndex) {
-    LinkedListNode<T> nextNode = currentNode.getNext();
+  private HANLinkedListNode<T> getNext(int targetIndex, HANLinkedListNode<T> currentNode, int currentIndex) {
+    HANLinkedListNode<T> nextNode = currentNode.getNext();
     if (nextNode == null) {
       return null;
     }
@@ -42,7 +40,7 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
     return getNext(targetIndex, nextNode, currentIndex+1);
   }
 
-  private LinkedListNode<T> getNodeAtPosition(int targetIndex) {
+  private HANLinkedListNode<T> getNodeAtPosition(int targetIndex) {
     if (targetIndex == 0) {
       return firstNode;
     }
@@ -57,10 +55,10 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
       return;
     }
 
-    LinkedListNode<T> prev = getNodeAtPosition(index-1);
-    LinkedListNode<T> cur = getNodeAtPosition(index);
+    HANLinkedListNode<T> prev = getNodeAtPosition(index-1);
+    HANLinkedListNode<T> cur = getNodeAtPosition(index);
 
-    LinkedListNode<T> newNode = new LinkedListNode<>(cur, value);
+    HANLinkedListNode<T> newNode = new HANLinkedListNode<>(cur, value);
     prev.setNext(newNode);
   }
 
@@ -72,15 +70,15 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
   @Override
   public T delete(int pos) {
     if (pos == 0) {
-      LinkedListNode<T> cur = getNodeAtPosition(pos);
+      HANLinkedListNode<T> cur = getNodeAtPosition(pos);
 
       firstNode = cur.getNext();
 
       return cur.getValue();
     }
 
-    LinkedListNode<T> prev = getNodeAtPosition(pos-1);
-    LinkedListNode<T> cur = getNodeAtPosition(pos);
+    HANLinkedListNode<T> prev = getNodeAtPosition(pos-1);
+    HANLinkedListNode<T> cur = getNodeAtPosition(pos);
 
     if (cur == null) {
       throw new IndexOutOfBoundsException();
@@ -93,7 +91,7 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
 
   @Override
   public T get(int pos) {
-    LinkedListNode<T> node = getNodeAtPosition(pos);
+    HANLinkedListNode<T> node = getNodeAtPosition(pos);
 
     if (node == null) {
       throw new IndexOutOfBoundsException();
@@ -124,7 +122,7 @@ public class HANLinkedList<T> implements IHANLinkedList<T> {
     return firstNode.getValue();
   }
 
-  private int countNodes(LinkedListNode<T> currentNode) {
+  private int countNodes(HANLinkedListNode<T> currentNode) {
     if (currentNode == null) {
       return 0;
     }

@@ -1,4 +1,4 @@
-package nl.han.ica.datastructures;
+package nl.han.ica.datastructures.Stack;
 
 public interface IHANStack<T> {
     /**

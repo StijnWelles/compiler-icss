@@ -1,6 +1,6 @@
 package nl.han.ica.icss.transforms;
 
-import nl.han.ica.datastructures.IHANLinkedList;
+import nl.han.ica.datastructures.LinkedList.IHANLinkedList;
 import nl.han.ica.icss.ast.Expression;
 import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.ast.Operation;

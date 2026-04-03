@@ -1,6 +1,6 @@
 package nl.han.ica.icss.checker;
 
-import nl.han.ica.datastructures.IHANLinkedList;
+import nl.han.ica.datastructures.LinkedList.IHANLinkedList;
 import nl.han.ica.datastructures.LinkedList.HANLinkedList;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.operations.AdditiveOperation;
@@ -55,7 +55,7 @@ public abstract class CheckerBase {
     if (o instanceof MultiplicativeOperation) {
       // For multiplication, at least one of the leaves have to be scalar
       if (lhsType != ExpressionType.SCALAR && rhsType != ExpressionType.SCALAR) {
-        o.setError("Using 2 non-scalar literals is not allowed in a multiplicative operation."); // todo betere foutmelding
+        o.setError("Using 2 non-scalar literals is not allowed in a multiplicative operation.");
         return lhsType;
       }
 

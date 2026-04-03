@@ -1,12 +1,8 @@
 package nl.han.ica.icss.checker;
 
-import nl.han.ica.datastructures.IHANLinkedList;
+import nl.han.ica.datastructures.LinkedList.IHANLinkedList;
 import nl.han.ica.datastructures.LinkedList.HANLinkedList;
 import nl.han.ica.icss.ast.*;
-import nl.han.ica.icss.ast.literals.ColorLiteral;
-import nl.han.ica.icss.ast.literals.ScalarLiteral;
-import nl.han.ica.icss.ast.operations.AdditiveOperation;
-import nl.han.ica.icss.ast.operations.MultiplicativeOperation;
 import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.HashMap;

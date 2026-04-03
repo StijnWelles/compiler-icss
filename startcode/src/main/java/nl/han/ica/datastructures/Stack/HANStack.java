@@ -1,7 +1,5 @@
 package nl.han.ica.datastructures.Stack;
 
-import nl.han.ica.datastructures.IHANStack;
-
 import java.util.ArrayList;
 import java.util.List;
 

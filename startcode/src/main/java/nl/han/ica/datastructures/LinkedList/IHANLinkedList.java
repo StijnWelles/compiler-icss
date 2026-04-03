@@ -1,6 +1,4 @@
-package nl.han.ica.datastructures;
-
-import nl.han.ica.datastructures.LinkedList.LinkedListNode;
+package nl.han.ica.datastructures.LinkedList;
 
 public interface IHANLinkedList<T> extends Iterable<T> {
     /**

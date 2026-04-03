@@ -3,9 +3,9 @@ package nl.han.ica.datastructures.LinkedList;
 import java.util.Iterator;
 
 public class HANLinkedListIterator<T> implements Iterator<T> {
-  private LinkedListNode<T> next;
+  private HANLinkedListNode<T> next;
 
-  HANLinkedListIterator(LinkedListNode<T> first) {
+  HANLinkedListIterator(HANLinkedListNode<T> first) {
     next = first;
   }
 

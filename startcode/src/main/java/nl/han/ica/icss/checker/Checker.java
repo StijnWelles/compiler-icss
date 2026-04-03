@@ -47,7 +47,6 @@ public class Checker extends CheckerBase {
   }
 
   private void checkNode(ASTNode node) {
-    // Todo dubbele declaration weghalen
     switch (node) {
       case VariableAssignment variableAssignment -> handle(variableAssignment);
       case VariableReference variableReference -> handle(variableReference);
