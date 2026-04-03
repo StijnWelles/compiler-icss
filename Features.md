@@ -12,6 +12,7 @@
 	- 4 getallen `#00fc` (komt overeen met `#0000ffcc`)
 - [x] Meerdere selectors kunnen meegeven (Bijv `.a, #b {...}` selecteert class a en id b) 
 - [ ] Comments in css
+- [ ] Expressions: Deling
 - [ ] Expression in if (groter dan etc)
 
 # Checking
@@ -30,3 +31,6 @@
 # Generating
 - [x] GE01 - Omzetten AST naar CSS2-compliant string
 - [x] GE02 - Per scopeniveau twee spaties toevoegen
+
+# Bugs
+- `#abcdef {color: #ffffff;}` geeft een error omdat color precedence heeft over een id selector, ookal kan selector geen color zijn.

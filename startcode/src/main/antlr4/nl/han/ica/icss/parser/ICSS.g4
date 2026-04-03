@@ -19,11 +19,11 @@ SCALAR: [0-9]+;
 
 //Color value takes precedence over id idents
 fragment HEX: [0-9a-f];
-COLOR_6: HEX HEX HEX HEX HEX HEX;
-COLOR_8: HEX HEX HEX HEX HEX HEX HEX HEX;
-COLOR_3: HEX HEX HEX;
-COLOR_4: HEX HEX HEX HEX;
-COLOR: '#' (COLOR_6 | COLOR_8 | COLOR_3 | COLOR_4);
+fragment COLOR_6: '#' HEX HEX HEX HEX HEX HEX;
+fragment COLOR_8: '#' HEX HEX HEX HEX HEX HEX HEX HEX;
+fragment COLOR_3: '#' HEX HEX HEX;
+fragment COLOR_4: '#' HEX HEX HEX HEX;
+COLOR: COLOR_6 | COLOR_8 | COLOR_3 | COLOR_4;
 
 //Specific identifiers for id's and css classes
 ID_IDENT: '#' [a-z0-9\-]+;

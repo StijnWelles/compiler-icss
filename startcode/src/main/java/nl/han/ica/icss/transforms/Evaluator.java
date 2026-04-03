@@ -88,7 +88,7 @@ public class Evaluator extends EvaluatorBase implements Transform {
   private ASTNode checkNode(ASTNode node, ASTNode parent) {
     return switch (node) {
       case VariableAssignment variableAssignment -> handle(variableAssignment);
-      case Declaration declaration -> handle(declaration, (Stylerule) parent);
+      case Declaration declaration -> handle(declaration, (EnterScope) parent);
       case Expression expression -> handle(expression);
       case IfClause ifClause -> handle(ifClause, parent);
       default -> node;
@@ -107,19 +107,18 @@ public class Evaluator extends EvaluatorBase implements Transform {
     return getLiteral(expression);
   }
 
-  private void removePreviousDeclarationIfExists(PropertyName propertyName, Stylerule parent, int maxIndex) {
+  private void removePreviousDeclarationIfExists(PropertyName propertyName, EnterScope parent, int maxIndex) {
     for (int i = 0; i < maxIndex; i++) {
-      // At this stage, body of Stylerule always has declarations
-      Declaration declaration = (Declaration) parent.getBody().get(i);
-
-      if (Objects.equals(declaration.property.name, propertyName.name)) {
-        parent.removeChild(declaration);
-        return; // There is always 0 or 1 of a property in the list
+      if (parent.getBody().get(i) instanceof Declaration declaration) {
+        if (Objects.equals(declaration.property.name, propertyName.name)) {
+          ((ASTNode) parent).removeChild(declaration);
+          return; // There is always 0 or 1 of a property in the list
+        }
       }
     }
   }
 
-  private ASTNode handle(Declaration declaration, Stylerule parent) {
+  private ASTNode handle(Declaration declaration, EnterScope parent) {
     removePreviousDeclarationIfExists(declaration.property, parent, parent.getBody().indexOf(declaration));
 
     return declaration;
